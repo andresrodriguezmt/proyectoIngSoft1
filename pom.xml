@@ -8,11 +8,11 @@
 		<version>3.2.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>co.vinni</groupId>
-	<artifactId>appDemo</artifactId>
+	<groupId>co.ucentral.sistemas</groupId>
+	<artifactId>proyectoCitasG15</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>appDemo</name>
-	<description>Esta es la descripcion</description>
+	<name>proyectoCitasG15</name>
+	<description>Proyecto para agendamiento de citas del banco DINER</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
