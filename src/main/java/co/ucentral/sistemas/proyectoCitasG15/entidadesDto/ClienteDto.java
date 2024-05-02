@@ -12,17 +12,11 @@ import java.util.Date;
 public class ClienteDto {
 
     private long idCliente;
-
     private String nombre;
-
     private int edad;
-
     private String cedula;
-
     private String estado;
-
     private String correo;
-
     private String contrasenia;
 
 }

@@ -8,6 +8,7 @@ import co.ucentral.sistemas.proyectoCitasG15.repositorios.RepositorioCliente;
 import co.ucentral.sistemas.proyectoCitasG15.repositorios.RepositorioEmpleado;
 import co.ucentral.sistemas.proyectoCitasG15.repositorios.RepositorioSede;
 import co.ucentral.sistemas.proyectoCitasG15.repositorios.RepositorioServicio;
+import co.ucentral.sistemas.proyectoCitasG15.servicios.ServicioSede;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,6 +27,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		SpringApplication.run(ProyectoCitasG15Application.class, args);
 		System.out.println("Aplicacion citas iniciada");
 	}
+
 
 	@Autowired
 	RepositorioServicio repositorioServicio;

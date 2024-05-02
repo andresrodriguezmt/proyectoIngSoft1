@@ -38,7 +38,7 @@ public class Cliente implements Serializable {
     @Column(name = "CLI_CORREO", nullable = false)
     private String correo;
 
-    @Column(name = "CLI_CONTRASEÑA", nullable = false)
+    @Column(name = "CLI_CONTRASENIA", nullable = false)
     private String contrasenia;
 
 }

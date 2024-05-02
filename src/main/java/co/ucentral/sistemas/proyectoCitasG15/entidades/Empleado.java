@@ -43,8 +43,8 @@ public class Empleado {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "servicio_empleado", joinColumns = @JoinColumn(name = "emp_idEmpleado", referencedColumnName = "EMP_ID"),
-            inverseJoinColumns = @JoinColumn(name = "ser_idServicio", referencedColumnName =  "SER_ID")
+            name = "servicio_empleado", joinColumns = @JoinColumn(name = "emp_id", referencedColumnName = "EMP_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ser_id", referencedColumnName =  "SER_ID")
     )
     private List<Servicio> servicio;
 

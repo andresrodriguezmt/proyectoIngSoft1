@@ -6,7 +6,9 @@ import co.ucentral.sistemas.proyectoCitasG15.operaciones.OperacionesServicio;
 import co.ucentral.sistemas.proyectoCitasG15.repositorios.RepositorioServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServicioServicio implements OperacionesServicio {
 
     private ModelMapper modelMapper = new ModelMapper();
