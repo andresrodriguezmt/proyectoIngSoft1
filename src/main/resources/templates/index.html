@@ -1,71 +1,73 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Grupo 15</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <head>
+        <title>Grupo 15</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-          crossorigin="anonymous">
-</head>
-<body style="background-color: rgb(255,255,255);">
+        <!-- Optional theme -->
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+              crossorigin="anonymous">
+    </head>
+    <body style="background-color: rgb(255,255,255);">
 
-    <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body">
-        <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body">
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                    <li class="nav-item">
-                        <a class="navbar-brand fs-1" style="color: white" > </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="navbar-brand fs-1" style="color: white" > </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="navbar-brand fs-1" style="color: white" >Ingenieria de software 1 </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <br>
-    <br>
-
-    <div class="container-xl">
-        <div class="row">
-            <!-- División izquierda -->
-            <div class="col-md-4 text-center">
-                <img th:src="@{/Logo.png}" class="img-fluid" width="340" height="340" alt="Logo">
-            </div>
-            <!-- División derecha -->
-            <div class="col-md-8" style="text-align: justify;">
-
-                <h1>Proyecto grupo 15</h1>
-
-                <br>
-
-                <p class="lh-base fw-medium fs-4" >El banco DINER solicita el desarrollo de un aplicativo con la capacidad de otorgar a sus clientes el agendamiento de citas a las diferentes sedes o sucursales bancarias que este posee, con los servicios que son ofrecidos en cada una de ellas. </p>
-                <p class="lh-base fw-medium fs-4" >Para ingresar a las funcionalidades de la aplicación autentiquese dandole click al siguiente boton. </p>
-
-                <br>
-
-                <div class="row">
-                    <a th:href="@{/usuario/autenticar}"  class="btn btn-success fs-3 col-4 offset-md-4">Autenticación</a>
+                        <li class="nav-item">
+                            <a class="navbar-brand fs-1" style="color: white" >Ingenieria de software 1 </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </nav>
 
+        <br><br><br>
 
+        <div class="container-xl">
+            <div class="row">
+                <!-- División izquierda -->
+                <div class="col-md-4 text-center">
+                    <img th:src="@{/Logo.png}" class="img-fluid" width="340" height="340" alt="Logo">
+                </div>
+                <!-- División derecha -->
+                <div class="col-md-8" style="text-align: justify;">
+
+                    <h1>Proyecto grupo 15</h1>
+
+                    <br>
+
+                    <p class="lh-base fw-medium fs-4" >El banco DINER solicita el desarrollo de un aplicativo con la capacidad de otorgar a sus clientes el agendamiento de citas a las diferentes sedes o sucursales bancarias que este posee, con los servicios que son ofrecidos en cada una de ellas. </p>
+                    <p class="lh-base fw-medium fs-4" >Para ingresar a las funcionalidades de la aplicación autentiquese dandole click al siguiente boton. </p>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <a th:href="@{/cliente/autenticar}"  class="btn btn-dark fs-3 ">Autenticación cliente</a>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <a th:href="@{/empleado/autenticar}"  class="btn btn-dark fs-3 ">Autenticación empleado</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-<script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-</body>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous">
+    </script>
+    </body>
 
 </html>

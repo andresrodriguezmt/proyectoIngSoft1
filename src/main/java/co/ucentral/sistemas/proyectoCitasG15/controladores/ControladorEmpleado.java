@@ -20,29 +20,32 @@ public class ControladorEmpleado {
     ServicioEmpleado servicioEmpleado;
 
     /**
-     * Función que redireccióna a la pagina para realizar la autenticación al proyecto
+     * Función que redireccióna a la pagina para realizar la autenticación de un empleado al proyecto
+     *
      * @param error
      * @param model
      * @return
      */
-    @GetMapping({"/usuario/autenticar"})
+    @GetMapping({"/empleado/autenticar"})
     public String visualizarAutenticar(@RequestParam(value = "error", required = false) String error, Model model){
 
         EmpleadoDto empleadoDto = new EmpleadoDto();
         model.addAttribute("empleado", empleadoDto);
 
+        /**
+         * valida si la alerta en la vista va a ser desplegada o no.
+         */
         if (error != null) {
             model.addAttribute("loginError", true);
         }
 
-        return "autenticacion";
+        return "autenticacionEmpleado";
     }
 
     /**
      * Metodo para autenticar si el empleado existe a la aplicacion, donde en caso contrario
-     * validará si el usuario que intenta ingresar a la aplicación es un cliente, por lo tanto
-     * redirecciona la información escrita en la vista a dicha funcionalidad en el controlador
-     * de la entidad cliente
+     * envia la determinada información para mostrar en la vista una alerta, que informa el posible
+     * error en la digitación correcta de la cedula o la contraseña del empleado por parte del usuario.
      *
      * @param empleadoDto
      * @param model
@@ -51,22 +54,16 @@ public class ControladorEmpleado {
      */
     @PostMapping({"/empleado"})
     public String autenticacionUsuario(@ModelAttribute("empleado") EmpleadoDto empleadoDto, Model model, RedirectAttributes redirectAttributes){
-        if(servicioEmpleado.autenticarPorCedulayContrasenia(empleadoDto.getCedula(), empleadoDto.getContrasenia()) != null){
 
-            EmpleadoDto empleadoDto1 = servicioEmpleado.autenticarPorCedulayContrasenia(empleadoDto.getCedula(), empleadoDto.getContrasenia());
+        EmpleadoDto empleadoDto1 = servicioEmpleado.autenticarPorCedulayContrasenia(empleadoDto.getCedula(), empleadoDto.getContrasenia());
+
+        if(empleadoDto1 != null){
             model.addAttribute("empleado", empleadoDto1);
             return "empleados";
         }else{
 
-            ClienteDto clienteDto = new ClienteDto();
-
-            clienteDto.setCorreo(empleadoDto.getCedula());
-            clienteDto.setCedula(empleadoDto.getCedula());
-
-            clienteDto.setContrasenia(empleadoDto.getContrasenia());
-
-            redirectAttributes.addFlashAttribute("cliente", clienteDto);
-            return "redirect:/cliente";
+            redirectAttributes.addFlashAttribute("alertaError", true);
+            return "redirect:/empleado/autenticar";
         }
     }
 }
