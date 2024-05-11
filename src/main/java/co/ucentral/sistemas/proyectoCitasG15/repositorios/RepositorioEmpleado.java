@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface RepositorioEmpleado extends CrudRepository<Empleado, Long> {
 
-    @Query(value = "SELECT * FROM EMPLEADO e where emp_cedula = ?1 and emp_contrasenia = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM EMPLEADO where emp_cedula = ?1 and emp_contrasenia = ?2", nativeQuery = true)
     Empleado buscarEmpPorCedulayContrasenia(String cedula, String contrasenia);
 }
 

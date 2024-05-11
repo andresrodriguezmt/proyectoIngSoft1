@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServicioEmpleado implements OperacionesEmpleado {
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     RepositorioEmpleado repositorioEmpleado;

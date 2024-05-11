@@ -26,7 +26,5 @@ public class Servicio implements Serializable {
     @Column(name = "SER_NOMBRE", nullable = false)
     private String nombre;
 
-    @ManyToMany(mappedBy= "servicio")
-    private List<Empleado> empleados;
 }
 

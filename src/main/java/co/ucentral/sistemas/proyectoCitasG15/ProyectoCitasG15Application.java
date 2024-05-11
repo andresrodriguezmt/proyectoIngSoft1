@@ -28,7 +28,6 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		System.out.println("Aplicacion citas iniciada");
 	}
 
-
 	@Autowired
 	RepositorioServicio repositorioServicio;
 
@@ -47,58 +46,36 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		/**
 		 * Creación y almacenamiento en la base de datos de 10 clientes
 		 */
-
-		Cliente cliente1 = new Cliente(0, "Santiago Gonzales Garcia ",30 ,"1225489671" ,"Nuevo" ,"agonzalesg@gmail.com" ,"gonzales12345");
-		Cliente cliente2 = new Cliente(0, "Felipe Quintero Pinzon",23 ,"1005688745" ,"Nuevo" ,"fquinterop@gmail.com" ,"quintero456");
-		Cliente cliente3 = new Cliente(0, "Santiago Cruz",40 ,"1000475578" ,"Nuevo" ,"scruz@gmail.com" ,"cruz123");
-		Cliente cliente4 = new Cliente(0, "Felipe Rodriguez Ramirez",35 ,"1003655784" ,"Nuevo" ,"frodriguezr@gmail.com" ,"rodriguez987");
-		Cliente cliente5 = new Cliente(0, "Maria Alfonso Perez",25 ,"1023644789" ,"Nuevo" ,"malfonsop@gmail.com" ,"alfonso675");
-		Cliente cliente6 = new Cliente(0, "Melissa Martinez Gomez",31 ,"1007855134" ,"Nuevo" ,"mmartinezg@gmail.com" ,"martinez345");
-		Cliente cliente7 = new Cliente(0, "Elizabeth Torres Rodriguez",47 ,"1000533467" ,"Nuevo" ,"etorresr@gmail.com" ,"torres098");
-		Cliente cliente8 = new Cliente(0, "Gonzalo Sanchez Diaz",50 ,"1000123314" ,"Nuevo" ,"gsanchezd@gmail.com" ,"sanchez654");
-		Cliente cliente9 = new Cliente(0, "Nicolas Jimenez Herrera",52 ,"1000111478" ,"Nuevo" ,"njimenezh@gmail.com" ,"jimenez718");
-		Cliente cliente10 = new Cliente(0, "Valentina Castro Suarez",21 ,"1009877954" ,"Nuevo" ,"vcastros@gmail.com" ,"castro619");
-
-		repositorioCliente.save(cliente1);
-		repositorioCliente.save(cliente2);
-		repositorioCliente.save(cliente3);
-		repositorioCliente.save(cliente4);
-		repositorioCliente.save(cliente5);
-		repositorioCliente.save(cliente6);
-		repositorioCliente.save(cliente7);
-		repositorioCliente.save(cliente8);
-		repositorioCliente.save(cliente9);
-		repositorioCliente.save(cliente10);
+		repositorioCliente.save(new Cliente(0, "Santiago Gonzales Garcia ",30 ,"1225489671" ,"Nuevo" ,"agonzalesg@gmail.com" ,"gonzales12345"));
+		repositorioCliente.save(new Cliente(0, "Felipe Quintero Pinzon",23 ,"1005688745" ,"Nuevo" ,"fquinterop@gmail.com" ,"quintero456"));
+		repositorioCliente.save(new Cliente(0, "Santiago Cruz",40 ,"1000475578" ,"Nuevo" ,"scruz@gmail.com" ,"cruz123"));
+		repositorioCliente.save(new Cliente(0, "Felipe Rodriguez Ramirez",35 ,"1003655784" ,"Nuevo" ,"frodriguezr@gmail.com" ,"rodriguez987"));
+		repositorioCliente.save(new Cliente(0, "Maria Alfonso Perez",25 ,"1023644789" ,"Nuevo" ,"malfonsop@gmail.com" ,"alfonso675"));
+		repositorioCliente.save(new Cliente(0, "Melissa Martinez Gomez",31 ,"1007855134" ,"Nuevo" ,"mmartinezg@gmail.com" ,"martinez345"));
+		repositorioCliente.save(new Cliente(0, "Elizabeth Torres Rodriguez",47 ,"1000533467" ,"Nuevo" ,"etorresr@gmail.com" ,"torres098"));
+		repositorioCliente.save(new Cliente(0, "Gonzalo Sanchez Diaz",50 ,"1000123314" ,"Nuevo" ,"gsanchezd@gmail.com" ,"sanchez654"));
+		repositorioCliente.save(new Cliente(0, "Nicolas Jimenez Herrera",52 ,"1000111478" ,"Nuevo" ,"njimenezh@gmail.com" ,"jimenez718"));
+		repositorioCliente.save(new Cliente(0, "Valentina Castro Suarez",21 ,"1009877954" ,"Nuevo" ,"vcastros@gmail.com" ,"castro619"));
 
 		/**
 		 * Creacion de los 3 servicios (caja, asesoria y obtener nuevos prodictos)
 		 */
-		Servicio servicio1 = new Servicio();
-		servicio1.setNombre("Caja");
+		Servicio servicioCaja = new Servicio();
+		servicioCaja.setNombre("Caja");
 
-		Servicio servicio2 = new Servicio();
-		servicio2.setNombre("Asesoría");
+		Servicio servicioAsesoria = new Servicio();
+		servicioAsesoria.setNombre("Asesoría");
 
-		Servicio servicio3 = new Servicio();
-		servicio3.setNombre("Obtener nuevos productos");
+		Servicio servicioObtenerProd = new Servicio();
+		servicioObtenerProd.setNombre("Obtener nuevos productos");
 
 		/**
 		 * Adicion por medio del repositorio (CRUD) de la información por completo creada
 		 * en referencia a los 3 servicios que ofrece el banco DINER
 		 */
-
-		repositorioServicio.save(servicio1);
-		repositorioServicio.save(servicio2);
-		repositorioServicio.save(servicio3);
-
-
-		List<Servicio> servicioCaja = new ArrayList<>();
-		servicioCaja.add(servicio1);
-
-		List<Servicio> serviciosAsObt = new ArrayList<>();
-		serviciosAsObt.add(servicio2);
-		serviciosAsObt.add(servicio3);
-
+		repositorioServicio.save(servicioCaja);
+		repositorioServicio.save(servicioAsesoria);
+		repositorioServicio.save(servicioObtenerProd);
 
 		/**
 		 * Creacion de las 4 sedes
@@ -131,6 +108,15 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		sede4.setNumEmpleado(6);
 		sede4.setHoraApertura(8,0,0);
 		sede4.setHoraCierre(16,0,0);
+
+		/**
+		 * Adicion por medio del repositorio (CRUD) de la información por completo creada
+		 * en referencia a las 4 sedes (sucursales) que posee el banco DINER
+		 */
+		repositorioSede.save(sede1);
+		repositorioSede.save(sede2);
+		repositorioSede.save(sede3);
+		repositorioSede.save(sede4);
 
 		/**
 		 * Creación de los 24 empleados para las 4 sedes que tiene el banco
@@ -171,7 +157,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS4.setCedula("1056789012");
 		empleadoS4.setContrasenia("Gomez456");
 		empleadoS4.setSede(sede1);
-		empleadoS4.setServicio(serviciosAsObt);
+		empleadoS4.setServicio(servicioAsesoria);
 
 		Empleado empleadoS5 = new Empleado();
 		empleadoS5.setNombre("Sergio Lopez Sanchez");
@@ -180,7 +166,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS5.setCedula("1046789012");
 		empleadoS5.setContrasenia("Garcia345");
 		empleadoS5.setSede(sede1);
-		empleadoS5.setServicio(serviciosAsObt);
+		empleadoS5.setServicio(servicioAsesoria);
 
 		Empleado empleadoS6 = new Empleado();
 		empleadoS6.setNombre("Diana García López");
@@ -189,7 +175,16 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS6.setCedula("1078901234");
 		empleadoS6.setContrasenia("Lopez567");
 		empleadoS6.setSede(sede1);
-		empleadoS6.setServicio(serviciosAsObt);
+		empleadoS6.setServicio(servicioObtenerProd);
+
+		Empleado empleadoS7 = new Empleado();
+		empleadoS7.setNombre("Gonzalo Rodriguez Garcia ");
+		empleadoS7.setEdad(48);
+		empleadoS7.setEstado("Libre");
+		empleadoS7.setCedula("1067901234");
+		empleadoS7.setContrasenia("Rodriguez567");
+		empleadoS7.setSede(sede1);
+		empleadoS7.setServicio(servicioObtenerProd);
 
 		/**
 		 * Creacion de los 6 empleados para la zona centro
@@ -207,7 +202,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC2.setNombre("Laura Sanchez Diaz");
 		empleadoC2.setEdad(19);
 		empleadoC2.setEstado("Libre");
-		empleadoC2.setCedula("1001234567");
+		empleadoC2.setCedula("1002234567");
 		empleadoC2.setContrasenia("Sanchez890");
 		empleadoC2.setSede(sede2);
 		empleadoC2.setServicio(servicioCaja);
@@ -228,7 +223,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC4.setCedula("1023456789");
 		empleadoC4.setContrasenia("Ramirez012");
 		empleadoC4.setSede(sede2);
-		empleadoC4.setServicio(serviciosAsObt);
+		empleadoC4.setServicio(servicioAsesoria);
 
 		Empleado empleadoC5 = new Empleado();
 		empleadoC5.setNombre("Gabriel Diaz Moreno");
@@ -237,7 +232,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC5.setCedula("1034506789");
 		empleadoC5.setContrasenia("Diaz123");
 		empleadoC5.setSede(sede2);
-		empleadoC5.setServicio(serviciosAsObt);
+		empleadoC5.setServicio(servicioAsesoria);
 
 		Empleado empleadoC6 = new Empleado();
 		empleadoC6.setNombre("Isabel Torres Vargas");
@@ -246,7 +241,16 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC6.setCedula("1075607891");
 		empleadoC6.setContrasenia("Torres234");
 		empleadoC6.setSede(sede2);
-		empleadoC6.setServicio(serviciosAsObt);
+		empleadoC6.setServicio(servicioObtenerProd);
+
+		Empleado empleadoC7 = new Empleado();
+		empleadoC7.setNombre("Maria Loaiza Vargas");
+		empleadoC7.setEdad(31);
+		empleadoC7.setEstado("Libre");
+		empleadoC7.setCedula("1025567891");
+		empleadoC7.setContrasenia("Loaiza234");
+		empleadoC7.setSede(sede2);
+		empleadoC7.setServicio(servicioObtenerProd);
 
 		/**
 		 * Creacion de los 6 empleados para la zona norte
@@ -285,7 +289,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN4.setCedula("1089012345");
 		empleadoN4.setContrasenia("Vargas678");
 		empleadoN4.setSede(sede3);
-		empleadoN4.setServicio(serviciosAsObt);
+		empleadoN4.setServicio(servicioAsesoria);
 
 		Empleado empleadoN5 = new Empleado();
 		empleadoN5.setNombre("Roberto Ortiz Valencia");
@@ -294,7 +298,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN5.setCedula("1090123456");
 		empleadoN5.setContrasenia("Ortiz789");
 		empleadoN5.setSede(sede3);
-		empleadoN5.setServicio(serviciosAsObt);
+		empleadoN5.setServicio(servicioAsesoria);
 
 		Empleado empleadoN6 = new Empleado();
 		empleadoN6.setNombre("Sofia Jimenez Ruiz");
@@ -303,7 +307,16 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN6.setCedula("1001234567");
 		empleadoN6.setContrasenia("Jimenez890");
 		empleadoN6.setSede(sede3);
-		empleadoN6.setServicio(serviciosAsObt);
+		empleadoN6.setServicio(servicioAsesoria);
+
+		Empleado empleadoN7 = new Empleado();
+		empleadoN7.setNombre("Daniela Perez Ramirez");
+		empleadoN7.setEdad(35);
+		empleadoN7.setEstado("Libre");
+		empleadoN7.setCedula("1091234567");
+		empleadoN7.setContrasenia("Perez810");
+		empleadoN7.setSede(sede3);
+		empleadoN7.setServicio(servicioAsesoria);
 
 		/**
 		 * Creacion de los 6 empleados para el aeropuerto
@@ -342,7 +355,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA4.setCedula("1009082335");
 		empleadoA4.setContrasenia("Franco227");
 		empleadoA4.setSede(sede4);
-		empleadoA4.setServicio(serviciosAsObt);
+		empleadoA4.setServicio(servicioAsesoria);
 
 		Empleado empleadoA5 = new Empleado();
 		empleadoA5.setNombre("Nicolas Rendon Lopez");
@@ -351,7 +364,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA5.setCedula("1001335561");
 		empleadoA5.setContrasenia("Ortiz789");
 		empleadoA5.setSede(sede4);
-		empleadoA5.setServicio(serviciosAsObt);
+		empleadoA5.setServicio(servicioAsesoria);
 
 		Empleado empleadoA6 = new Empleado();
 		empleadoA6.setNombre("Andrea Velasco Duarte");
@@ -360,147 +373,16 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA6.setCedula("1000234527");
 		empleadoA6.setContrasenia("Velasco829");
 		empleadoA6.setSede(sede4);
-		empleadoA6.setServicio(serviciosAsObt);
+		empleadoA6.setServicio(servicioObtenerProd);
 
-
-
-		/**
-		 * Creación de las listas para la adición de las relaciones existentes en las
-		 * sedes, con respecto a los empleados trabajando dentro de ellas
-		 */
-
-		/**
-		 * Zona sur
-		 */
-		List<Empleado> sedeSurLista = new ArrayList<>();
-		sedeSurLista.add(empleadoS1);
-		sedeSurLista.add(empleadoS2);
-		sedeSurLista.add(empleadoS3);
-		sedeSurLista.add(empleadoS4);
-		sedeSurLista.add(empleadoS5);
-		sedeSurLista.add(empleadoS6);
-
-		sede1.setEmpleados(sedeSurLista);
-
-
-		/**
-		 * Zona Centro
-		 */
-		List<Empleado> sedeCentroLista = new ArrayList<>();
-		sedeCentroLista.add(empleadoC1);
-		sedeCentroLista.add(empleadoC2);
-		sedeCentroLista.add(empleadoC3);
-		sedeCentroLista.add(empleadoC4);
-		sedeCentroLista.add(empleadoC5);
-		sedeCentroLista.add(empleadoC6);
-
-		sede2.setEmpleados(sedeCentroLista);
-
-		/**
-		 * Zona norte
-		 */
-		List<Empleado> sedeNorteLista = new ArrayList<>();
-		sedeNorteLista.add(empleadoN1);
-		sedeNorteLista.add(empleadoN2);
-		sedeNorteLista.add(empleadoN3);
-		sedeNorteLista.add(empleadoN4);
-		sedeNorteLista.add(empleadoN5);
-		sedeNorteLista.add(empleadoN6);
-
-		sede3.setEmpleados(sedeNorteLista);
-
-		/**
-		 * Aeropuerto
-		 */
-		List<Empleado> sedeAeroLista = new ArrayList<>();
-		sedeAeroLista.add(empleadoA1);
-		sedeAeroLista.add(empleadoA2);
-		sedeAeroLista.add(empleadoA3);
-		sedeAeroLista.add(empleadoA4);
-		sedeAeroLista.add(empleadoA5);
-		sedeAeroLista.add(empleadoA6);
-
-		sede4.setEmpleados(sedeAeroLista);
-
-		/**
-		 * Adicion por medio del repositorio (CRUD) de la información por completo creada
-		 * en referencia a las 4 sedes (sucursales) que posee el banco DINER
-		 */
-		repositorioSede.save(sede1);
-		repositorioSede.save(sede2);
-		repositorioSede.save(sede3);
-		repositorioSede.save(sede4);
-
-		/**
-		 * Creación de las listas para la adición de las relaciones existentes en los
-		 * servicios, con respecto a los empleados que poseen dicha labor a realizar
-		 */
-
-		/**
-		 * Lista de empleados que ejercen el servicio de caja
-		 */
-		List<Empleado> empServicioCaja = new ArrayList<>();
-		empServicioCaja.add(empleadoS1);
-		empServicioCaja.add(empleadoS2);
-		empServicioCaja.add(empleadoS3);
-		empServicioCaja.add(empleadoC1);
-		empServicioCaja.add(empleadoC2);
-		empServicioCaja.add(empleadoC3);
-		empServicioCaja.add(empleadoN1);
-		empServicioCaja.add(empleadoN2);
-		empServicioCaja.add(empleadoN3);
-		empServicioCaja.add(empleadoA1);
-		empServicioCaja.add(empleadoA2);
-		empServicioCaja.add(empleadoA3);
-
-		servicio1.setEmpleados(empServicioCaja);
-
-		/**
-		 * Lista de empleados que ejercen el servicio de asesoria
-		 */
-		List<Empleado> empServicioAse = new ArrayList<>();
-		empServicioAse.add(empleadoS4);
-		empServicioAse.add(empleadoS5);
-		empServicioAse.add(empleadoS6);
-		empServicioAse.add(empleadoC4);
-		empServicioAse.add(empleadoC5);
-		empServicioAse.add(empleadoC6);
-		empServicioAse.add(empleadoN4);
-		empServicioAse.add(empleadoN5);
-		empServicioAse.add(empleadoN6);
-		empServicioAse.add(empleadoA4);
-		empServicioAse.add(empleadoA5);
-		empServicioAse.add(empleadoA6);
-
-		servicio2.setEmpleados(empServicioAse);
-
-		/**
-		 * Lista de empleados que ejercen el servicio de asesoria
-		 */
-		List<Empleado> empServicioProd = new ArrayList<>();
-		empServicioProd.add(empleadoS4);
-		empServicioProd.add(empleadoS5);
-		empServicioProd.add(empleadoS6);
-		empServicioProd.add(empleadoC4);
-		empServicioProd.add(empleadoC5);
-		empServicioProd.add(empleadoC6);
-		empServicioProd.add(empleadoN4);
-		empServicioProd.add(empleadoN5);
-		empServicioProd.add(empleadoN6);
-		empServicioProd.add(empleadoA4);
-		empServicioProd.add(empleadoA5);
-		empServicioProd.add(empleadoA6);
-
-		servicio3.setEmpleados(empServicioProd);
-
-		/**
-		 * Adicion por medio del repositorio (CRUD) de la información por completo creada
-		 * en referencia a los 3 servicios que ofrece el banco DINER
-		 */
-
-		repositorioServicio.save(servicio1);
-		repositorioServicio.save(servicio2);
-		repositorioServicio.save(servicio3);
+		Empleado empleadoA7 = new Empleado();
+		empleadoA7.setNombre("Camila Pachon Diaz");
+		empleadoA7.setEdad(55);
+		empleadoA7.setEstado("Libre");
+		empleadoA7.setCedula("1013234927");
+		empleadoA7.setContrasenia("Pachon809");
+		empleadoA7.setSede(sede4);
+		empleadoA7.setServicio(servicioObtenerProd);
 
 		/**
 		 * guardado mediante el uso de repositorio (CRUD) de la información
@@ -512,24 +394,28 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		repositorioEmpleado.save(empleadoS4);
 		repositorioEmpleado.save(empleadoS5);
 		repositorioEmpleado.save(empleadoS6);
+		repositorioEmpleado.save(empleadoS7);
 		repositorioEmpleado.save(empleadoC1);
 		repositorioEmpleado.save(empleadoC2);
 		repositorioEmpleado.save(empleadoC3);
 		repositorioEmpleado.save(empleadoC4);
 		repositorioEmpleado.save(empleadoC5);
 		repositorioEmpleado.save(empleadoC6);
+		repositorioEmpleado.save(empleadoC7);
 		repositorioEmpleado.save(empleadoN1);
 		repositorioEmpleado.save(empleadoN2);
 		repositorioEmpleado.save(empleadoN3);
 		repositorioEmpleado.save(empleadoN4);
 		repositorioEmpleado.save(empleadoN5);
 		repositorioEmpleado.save(empleadoN6);
+		repositorioEmpleado.save(empleadoN7);
 		repositorioEmpleado.save(empleadoA1);
 		repositorioEmpleado.save(empleadoA2);
 		repositorioEmpleado.save(empleadoA3);
 		repositorioEmpleado.save(empleadoA4);
 		repositorioEmpleado.save(empleadoA5);
 		repositorioEmpleado.save(empleadoA6);
+		repositorioEmpleado.save(empleadoA7);
 
 	}
 }

@@ -37,16 +37,13 @@ public class Empleado {
     @Column(name = "EMP_CONTRASENIA", nullable = false)
     private String contrasenia;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "SED_ID")
     private Sede sede;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "servicio_empleado", joinColumns = @JoinColumn(name = "emp_id", referencedColumnName = "EMP_ID"),
-            inverseJoinColumns = @JoinColumn(name = "ser_id", referencedColumnName =  "SER_ID")
-    )
-    private List<Servicio> servicio;
+    @ManyToOne
+    @JoinColumn(name = "SER_ID")
+    private Servicio servicio;
 
 }
 

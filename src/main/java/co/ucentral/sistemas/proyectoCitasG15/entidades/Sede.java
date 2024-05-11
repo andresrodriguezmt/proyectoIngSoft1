@@ -39,8 +39,6 @@ public class Sede implements Serializable {
     @Column(name = "SED_DIRECCION", nullable = false)
     private String direccion;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sede", cascade = CascadeType.ALL)
-    private List<Empleado> empleados;
 
     public void setHoraApertura(int hora, int minuto, int segundo) {
         this.horaApertura = LocalTime.of(hora, minuto,segundo);
