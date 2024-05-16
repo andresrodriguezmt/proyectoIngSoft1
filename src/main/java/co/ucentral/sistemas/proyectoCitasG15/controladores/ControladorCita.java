@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,34 +69,168 @@ public class ControladorCita {
     public String mostrarFormlarioCrear(@PathVariable int codigoCliente, @ModelAttribute("cita") CitaDto citaDto, Model model){
 
         /**
+         * Obtención de la hora al momento que el cliente estara predispuesto a agendar la fecha de la cita
+         */
+        LocalDateTime fechaActual = LocalDateTime.now();
+
+
+
+        /**
          * lista que almacena las 16 franjas de tiempo para la cita
          */
         List<String> listaFechas = new ArrayList<>();
 
+        /**
+         * Variables que permiten almacenar la fecha (YYYY/mm/dd) y la hora (HH:mm:ss) de las franjas que se visualizaran en la vista al cliente
+         */
+        String fecha;
         String tiempo;
-        int hora = 7;
-        int minuto = 30;
-
-        DateTimeFormatter formatoDia = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String diaActual = formatoDia.format(LocalDate.now());
-
 
         /**
-         * almacenado de las 16 franjas de tiempo del dia
+         * Variables que almacenan el valor del dia, el mes y el año actual
          */
-        for (int i = 0; i < 17; i++){
+        int anio = fechaActual.getYear();
+        int mes = fechaActual.getMonthValue();
+        int dia = fechaActual.getDayOfMonth();;
 
-            if(minuto == 0){
-                minuto += 30;
-            }else {
-                hora += 1;
-                minuto = 0;
+        /**
+         * funcionalidad de incremento sobre
+         */
+        int hora = fechaActual.getHour() + 1;
+        int minuto = fechaActual.getMinute();
+
+        if(minuto < 30){
+            minuto  = 0;
+        }else{
+            minuto = 30;
+        }
+
+        if(hora < 8){
+
+            hora = 7;
+            minuto = 30;
+
+
+            /**
+             * almacenado de las 16 franjas de tiempo del dia
+             */
+            for (int i = 0; hora < 16; i++){
+
+                if(minuto == 0){
+                    minuto += 30;
+                }else {
+                    hora += 1;
+                    minuto = 0;
+                }
+
+                fecha = String.format("%04d-%02d-%02d", anio, mes,dia);
+                tiempo = String.format("%02d:%02d", hora, minuto);
+
+                System.out.println(tiempo);
+
+
+                if(hora != 16){
+                    listaFechas.add(fecha + " " + tiempo);
+                }
+            }
+        }else if(hora >=8 && hora < 16){
+            /**
+             * almacenado de las 16 franjas de tiempo del dia
+             */
+            for (int i = 0; hora < 16; i++){
+
+                if(minuto == 0){
+                    minuto += 30;
+                }else {
+                    hora += 1;
+                    minuto = 0;
+                }
+
+                fecha = String.format("%04d-%02d-%02d", anio, mes,dia);
+                tiempo = String.format("%02d:%02d", hora, minuto);
+
+                System.out.println(tiempo);
+
+
+                if(hora != 16){
+                    listaFechas.add(fecha + " " + tiempo);
+                }
+
+            }
+        }else{
+            System.out.println("paso aqui");
+
+            hora = 7;
+            minuto = 30;
+
+            switch (mes){
+                case 4: case 6: case 9: case 11: // Meses con 30 días
+                    if (dia == 30) {
+                        dia = 1;
+                        mes += 1;
+                    } else {
+                        dia +=1;
+                    }
+                    break;
+                case 2: // Febrero
+                    // Aquí puedes agregar una verificación adicional para años bisiestos si lo deseas
+
+                    if (dia == 29) {
+                        dia = 1;
+                        mes += 1;
+
+                    } else if(dia == 28) {
+                        dia = 1;
+                        mes += 1;
+                    }else{
+                        dia += 1;
+                    }
+
+                    break;
+                case 12: // Diciembre
+                    if (dia == 31) {
+                        dia = 1;
+                        mes = 1;
+                        anio += 1;
+                    } else {
+                        dia += 1;
+                    }
+                    break;
+
+                default: // Meses con 31 días
+                    if (dia == 31) {
+                        dia = 1;
+                        mes += 1;
+                    } else {
+                        dia++;
+                    }
+                    break;
             }
 
-            tiempo = String.format("%02d:%02d", hora, minuto);
-            System.out.println(tiempo);
-            listaFechas.add(diaActual + " " + tiempo);
+            for (int i = 0; hora < 16; i++){
+
+                if(minuto == 0){
+                    minuto += 30;
+                }else {
+                    hora += 1;
+                    minuto = 0;
+                }
+
+                fecha = String.format("%04d-%02d-%02d", anio, mes,dia);
+                tiempo = String.format("%02d:%02d", hora, minuto);
+
+                System.out.println(tiempo);
+
+
+                if(hora != 16){
+                    listaFechas.add(fecha + " " + tiempo);
+                }
+
+            }
+
         }
+
+
 
         model.addAttribute("cita", citaDto);
         model.addAttribute("listaFechas", listaFechas);
