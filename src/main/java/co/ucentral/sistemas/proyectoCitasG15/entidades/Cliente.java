@@ -1,10 +1,7 @@
 package co.ucentral.sistemas.proyectoCitasG15.entidades;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "CLIENTE")
 @ToString
+@Builder
 @Entity
 public class Cliente implements Serializable {
 
@@ -21,7 +19,7 @@ public class Cliente implements Serializable {
     @Column(name = "CLI_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CLIENTE")
     @SequenceGenerator(name = "SEQ_CLIENTE", sequenceName = "SEQ_CLIENTE", allocationSize = 1)
-    private long idCliente;
+    private int idCliente;
 
     @Column(name = "CLI_NOMBRE", nullable = false)
     private String nombre;

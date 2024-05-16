@@ -1,10 +1,7 @@
 package co.ucentral.sistemas.proyectoCitasG15.entidades;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalTime;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "SEDE")
 @ToString
+@Builder
 @Entity
 public class Sede implements Serializable {
 
@@ -22,7 +20,7 @@ public class Sede implements Serializable {
     @Column(name = "SED_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SEDE")
     @SequenceGenerator(name = "SEQ_SEDE", sequenceName = "SEQ_SEDE", allocationSize = 1)
-    private long idSede;
+    private int idSede;
 
     @Column(name = "SED_NOMBRE", nullable = false)
     private String nombre;

@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ClienteDto {
 
-    private long idCliente;
+    private int idCliente;
     private String nombre;
     private int edad;
     private String cedula;

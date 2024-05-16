@@ -9,6 +9,9 @@ public interface OperacionesCliente {
     public ClienteDto autenticarPorCedyContra(String cedula, String contrasenia);
 
     public ClienteDto autenticarPorCorreoyContra(String correo, String contrasenia);
+
+    public ClienteDto buscarPorPk(int pkEntidad);
+
 }
 
 

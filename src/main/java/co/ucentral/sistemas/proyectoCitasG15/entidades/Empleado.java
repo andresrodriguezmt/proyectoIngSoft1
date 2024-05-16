@@ -1,10 +1,7 @@
 package co.ucentral.sistemas.proyectoCitasG15.entidades;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "EMPLEADO")
 @ToString
+@Builder
 @Entity
 public class Empleado {
 

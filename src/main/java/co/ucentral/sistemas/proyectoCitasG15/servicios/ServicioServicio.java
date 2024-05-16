@@ -5,8 +5,11 @@ import co.ucentral.sistemas.proyectoCitasG15.entidadesDto.ServicioDto;
 import co.ucentral.sistemas.proyectoCitasG15.operaciones.OperacionesServicio;
 import co.ucentral.sistemas.proyectoCitasG15.repositorios.RepositorioServicio;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ServicioServicio implements OperacionesServicio {
@@ -24,5 +27,16 @@ public class ServicioServicio implements OperacionesServicio {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<ServicioDto> buscarTodos() {
+        TypeToken<List<ServicioDto>> typeToken = new TypeToken<>(){};
+        return modelMapper.map(repositorioServicio.findAll(), typeToken.getType());
+    }
+
+    @Override
+    public ServicioDto buscarPorNombre(String nombre) {
+        return modelMapper.map(repositorioServicio.findByNombre(nombre), ServicioDto.class);
     }
 }

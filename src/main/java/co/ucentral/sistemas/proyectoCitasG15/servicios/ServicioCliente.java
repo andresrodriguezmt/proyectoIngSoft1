@@ -50,4 +50,10 @@ public class ServicioCliente implements OperacionesCliente {
             return null;
         }
     }
+
+    @Override
+    public ClienteDto buscarPorPk(int pkEntidad) {
+        return modelMapper.map(repositorioCliente.findById(pkEntidad).orElse(null), ClienteDto.class);
+    }
+
 }
