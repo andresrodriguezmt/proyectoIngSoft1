@@ -7,6 +7,8 @@ public interface OperacionesEmpleado {
     public EmpleadoDto crear(EmpleadoDto empleadoDto);
 
     public EmpleadoDto autenticarPorCedulayContrasenia(String cedula, String contrasenia);
+
+    public EmpleadoDto buscarPorPk(int pk);
 }
 
 

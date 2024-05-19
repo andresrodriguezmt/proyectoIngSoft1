@@ -82,7 +82,7 @@ public class ControladorCita {
         String fecha;
         String tiempo;
 
-        String estado = "Activa";
+        String estado = "Activo";
 
         String formatoFecha = "%04d-%02d-%02d";
         String formatoHora = "%02d:%02d";
@@ -276,7 +276,7 @@ public class ControladorCita {
 
         Cliente cliente = modelMapper.map(servicioCliente.buscarPorPk(codigoCliente), Cliente.class);
 
-        citaDto.setEstado("Activa");
+        citaDto.setEstado("Activo");
         citaDto.setNumTurno(servicioCita.buscarUltimoTurnoPorServicioYSede(servicio.getIdServicio(), sede.getIdSede()));
         citaDto.setCliente(cliente);
         citaDto.setSede(sede);
@@ -288,5 +288,6 @@ public class ControladorCita {
         redirectAttributes.addAttribute("codigo", cliente.getIdCliente());
         return "redirect:/principal/cliente/{codigo}";
     }
+
 
 }

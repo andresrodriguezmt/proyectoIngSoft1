@@ -83,5 +83,11 @@ public class ServicioCita implements OperacionesCita {
 
     }
 
+    @Override
+    public List<CitaDto> buscarTodosPorServicioPorSedeYEstado(int idServicio, int idSede, String estado) {
+        TypeToken<List<CitaDto>> typeToken = new TypeToken<>(){};
+        return modelMapper.map(repositorioCita.findAllByServicioAndSede(idServicio,idSede, estado), typeToken.getType());
+    }
+
 
 }

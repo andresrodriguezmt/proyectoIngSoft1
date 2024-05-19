@@ -40,5 +40,10 @@ public class ServicioEmpleado implements OperacionesEmpleado {
             return null;
         }
     }
+
+    @Override
+    public EmpleadoDto buscarPorPk(int pk) {
+        return modelMapper.map(repositorioEmpleado.findById(pk).orElse(null), EmpleadoDto.class);
+    }
 }
 

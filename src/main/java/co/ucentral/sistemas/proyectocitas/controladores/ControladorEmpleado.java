@@ -2,13 +2,11 @@ package co.ucentral.sistemas.proyectocitas.controladores;
 
 
 import co.ucentral.sistemas.proyectocitas.entidadesdto.EmpleadoDto;
+import co.ucentral.sistemas.proyectocitas.servicios.ServicioCita;
 import co.ucentral.sistemas.proyectocitas.servicios.ServicioEmpleado;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -16,8 +14,11 @@ public class ControladorEmpleado {
 
     ServicioEmpleado servicioEmpleado;
 
-    public ControladorEmpleado(ServicioEmpleado servicioEmpleado) {
+    ServicioCita servicioCita;
+
+    public ControladorEmpleado(ServicioEmpleado servicioEmpleado, ServicioCita servicioCita) {
         this.servicioEmpleado = servicioEmpleado;
+        this.servicioCita = servicioCita;
     }
 
     /**
@@ -59,12 +60,23 @@ public class ControladorEmpleado {
         EmpleadoDto empleadoDto1 = servicioEmpleado.autenticarPorCedulayContrasenia(empleadoDto.getCedula(), empleadoDto.getContrasenia());
 
         if(empleadoDto1 != null){
-            model.addAttribute("empleado", empleadoDto1);
-            return "empleados";
+            redirectAttributes.addAttribute("idEmpleado", empleadoDto1.getIdEmpleado());
+            return "redirect:/principal/empleado/{idEmpleado}";
         }else{
 
             redirectAttributes.addFlashAttribute("alertaError", true);
             return "redirect:/empleado/autenticar";
         }
     }
+
+    @GetMapping({"/principal/empleado/{idEmpleado}"})
+    public String listarCitas(@PathVariable int idEmpleado, Model model){
+
+        EmpleadoDto empleadoDto = servicioEmpleado.buscarPorPk(idEmpleado);
+
+        model.addAttribute("empleado", empleadoDto);
+        model.addAttribute("listaCitas", servicioCita.buscarTodosPorServicioPorSedeYEstado(empleadoDto.getServicio().getIdServicio(), empleadoDto.getSede().getIdSede(), "Activo"));
+        return "empleados";
+    }
+
 }
