@@ -12,6 +12,8 @@ public interface OperacionesCita {
 
     public List<CitaDto> buscarTodos();
 
+    public CitaDto buscarPorPk(int pkEntidad);
+
     public List<CitaDto> buscarTodosPorCliente(ClienteDto clienteDto);
 
     public List<CitaDto> buscarTodosPorFecha(LocalDateTime fecha);

@@ -33,15 +33,10 @@
         <div class="container " >
 
             <br><br>
-            <div class="col-5 offset-md-8 ">
+            <div class="col-4 offset-md-8 ">
                 <div th:if="${alertaError}" id="alerta" class="alert alert-danger align-items-center " role="alert">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <svg class="bi flex-shrink-0 me-2 " width="65" height="65" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                        </div>
-                        <div class="col-md-10">
-                            <strong>ERROR !!</strong> los campos de <strong>Correo electrónico / cédula</strong> o <strong>contraseña</strong> son incorrectos, por favor ingrese nuevamente la información.
-                        </div>
+                    <div>
+                        <strong>ERROR !!</strong> los campos de <strong>cédula</strong> o <strong>contraseña</strong> son incorrectos, por favor ingrese nuevamente la información.
                     </div>
                 </div>
             </div>

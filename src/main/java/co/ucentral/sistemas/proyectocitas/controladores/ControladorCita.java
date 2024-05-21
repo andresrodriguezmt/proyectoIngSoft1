@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-
 import java.time.format.DateTimeFormatter;
-
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,30 +61,21 @@ public class ControladorCita {
         model.addAttribute("listaServicios", servicioServicio.buscarTodos());
         model.addAttribute("listaSedes", servicioSede.buscarTodos());
         model.addAttribute("cita", citaDto);
-        model.addAttribute("codigoCliente", codigoCliente);
+        model.addAttribute("idCliente", codigoCliente);
 
         return "primer_crear_cita";
     }
 
-    @GetMapping({"/crear2/cita/{codigoCliente}"})
-    public String mostrarFormularioCrear(@PathVariable int codigoCliente, @ModelAttribute("cita") CitaDto citaDto, Model model){
+    @GetMapping({"/crear2/cita/{idCliente}"})
+    public String mostrarFormularioCrear(@PathVariable int idCliente, @ModelAttribute("cita") CitaDto citaDto, RedirectAttributes redirectAttributes){
 
         Servicio servicio = modelMapper.map(servicioServicio.buscarPorNombre(citaDto.getServicio().getNombre()),Servicio.class);
         Sede sede = modelMapper.map(servicioSede.buscarPorNombre(citaDto.getSede().getNombre()),Sede.class);
 
+        citaDto.setSede(sede);
+        citaDto.setServicio(servicio);
 
         LocalDateTime fechaActual = LocalDateTime.now();
-
-        List<String> listaFechas = new ArrayList<>();
-
-        String fecha;
-        String tiempo;
-
-        String estado = "Activo";
-
-        String formatoFecha = "%04d-%02d-%02d";
-        String formatoHora = "%02d:%02d";
-        String formatoDate = "yyyy-MM-dd HH:mm";
 
         int anio = fechaActual.getYear();
         int mes = fechaActual.getMonthValue();
@@ -95,168 +84,105 @@ public class ControladorCita {
         int hora = fechaActual.getHour() + 1;
         int minuto = fechaActual.getMinute();
 
-        minuto  = minuto < 30 ? 0 : 30;
-
         if(hora < 8){
-
             hora = 7;
             minuto = 30;
-
-            while(hora < 16){
-
-                if (minuto == 0) {
-                    minuto += 30;
-                } else {
-                    hora += 1;
-                    minuto = 0;
-                }
-
-                fecha = String.format(formatoFecha, anio, mes,dia);
-                tiempo = String.format(formatoHora, hora, minuto);
-
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern(formatoDate);
-
-                TemporalAccessor temporalAccessor = formato.parse(fecha + " " + tiempo);
-
-                fechaActual = LocalDateTime.from(temporalAccessor);
-
-                CitaDto citaDto1= servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estado);
-
-                if(hora != 16 && citaDto1 == null){
-
-                    List<String> listadoFechas = servicioCita.buscarFechasPorServicioPorSedeYFecha(servicio.getIdServicio(), sede.getIdSede(), fechaActual);
-
-                    if(servicio.getNombre().equalsIgnoreCase("Caja")){
-                        if (listadoFechas.size() < 3){
-                            listaFechas.add(fecha + " " + tiempo);
-                        }
-                    }else {
-                        if (listadoFechas.size() < 2){
-                            listaFechas.add(fecha + " " + tiempo);
-                        }
-                    }
-
-                }
-            }
-
         }else if(hora < 16){
-
-
-            while(hora < 16){
-
-                if(minuto == 0){
-                    minuto += 30;
-                }else {
-                    hora += 1;
-                    minuto = 0;
-                }
-
-                fecha = String.format(formatoFecha, anio, mes,dia);
-                tiempo = String.format(formatoHora, hora, minuto);
-
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern(formatoDate);
-
-                TemporalAccessor temporalAccessor = formato.parse(fecha + " " + tiempo);
-
-                fechaActual = LocalDateTime.from(temporalAccessor);
-
-
-                CitaDto citaDto1= servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estado);
-
-                if(hora != 16 && citaDto1 == null){
-                    List<String> listadoFechas = servicioCita.buscarFechasPorServicioPorSedeYFecha(servicio.getIdServicio(), sede.getIdSede(), fechaActual);
-
-                    if(servicio.getNombre().equalsIgnoreCase("Caja")){
-                        if (listadoFechas.size() < 3){
-                            listaFechas.add(fecha + " " + tiempo);
-                        }
-                    }else {
-                        if (listadoFechas.size() < 2){
-                            listaFechas.add(fecha + " " + tiempo);
-                        }
-                    }
-                }
-
-            }
+            minuto = minuto < 30 ? 0 : 30;
         }else{
-
             hora = 7;
             minuto = 30;
 
-            switch (mes){
-                case 4, 6, 9, 11:
-                    if (dia == 30) {
-                        dia = 1;
-                        mes += 1;
-                    } else {
-                        dia +=1;
-                    }
-                    break;
-                case 2: // Febrero
-                    // Aquí puedes agregar una verificación adicional para años bisiestos si lo deseas
+            Integer[] fechaActualizada = obtenerFechaActualizada(dia, mes, anio);
 
-                    if (dia == 29 || dia == 28) {
-                        dia = 1;
-                        mes += 1;
-                    }
-                    else{
-                        dia += 1;
-                    }
+            dia = fechaActualizada[0];
+            mes = fechaActualizada[1];
+            anio = fechaActualizada[2];
+        }
 
-                    break;
-                case 12: // Diciembre
-                    if (dia == 31) {
-                        dia = 1;
-                        mes = 1;
-                        anio += 1;
-                    } else {
-                        dia += 1;
-                    }
-                    break;
+        redirectAttributes.addAttribute("anio", anio);
+        redirectAttributes.addAttribute("mes", mes);
+        redirectAttributes.addAttribute("dia", dia);
+        redirectAttributes.addAttribute("hora", hora);
+        redirectAttributes.addAttribute("minuto", minuto);
+        redirectAttributes.addFlashAttribute("cita", citaDto);
+        redirectAttributes.addAttribute("codigoCliente", idCliente);
+        return "redirect:/calculo/fechas";
+    }
 
-                default: // Meses con 31 días
-                    if (dia == 31) {
-                        dia = 1;
-                        mes += 1;
-                    } else {
-                        dia++;
-                    }
-                    break;
+    public Integer[] obtenerFechaActualizada(int dia, int mes, int anio){
+
+        switch (mes) {
+            case 4, 6, 9, 11:
+                if (dia == 30) {
+                    dia = 1;
+                    mes += 1;
+                } else {
+                    dia += 1;
+                }
+                break;
+            case 2:
+                if (dia == 29 || dia == 28) {
+                    dia = 1;
+                    mes += 1;
+                } else {
+                    dia += 1;
+                }
+                break;
+            case 12: // Diciembre
+                if (dia == 31) {
+                    dia = 1;
+                    mes = 1;
+                    anio += 1;
+                } else {
+                    dia += 1;
+                }
+                break;
+
+            default: // Meses con 31 días
+                if (dia == 31) {
+                    dia = 1;
+                    mes += 1;
+                } else {
+                    dia++;
+                }
+                break;
+        }
+        return new Integer[]{dia, mes, anio};
+    }
+
+    @GetMapping({"/calculo/fechas"})
+    public String calculoFechas(@ModelAttribute("cita") CitaDto citaDto, @ModelAttribute("codigoCliente") int codigoCliente, @ModelAttribute("anio") int anio, @ModelAttribute("mes") int mes, @ModelAttribute("dia") int dia, @ModelAttribute("hora") int hora, @ModelAttribute("minuto") int minuto, Model model){
+
+        Servicio servicio = citaDto.getServicio();
+        Sede sede = citaDto.getSede();
+
+        List<String> listaFechas = new ArrayList<>();
+
+        while (hora < 16){
+
+            if(minuto == 0){
+                minuto += 30;
+            }else {
+                hora += 1;
+                minuto = 0;
             }
 
-            while (hora < 16){
+            String fecha = String.format("%04d-%02d-%02d", anio, mes,dia);
+            String tiempo = String.format("%02d:%02d", hora, minuto);
 
-                if(minuto == 0){
-                    minuto += 30;
-                }else {
-                    hora += 1;
-                    minuto = 0;
-                }
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-                fecha = String.format(formatoFecha, anio, mes,dia);
-                tiempo = String.format(formatoHora, hora, minuto);
+            TemporalAccessor temporalAccessor = formato.parse(fecha + " " + tiempo);
 
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern(formatoDate);
+            LocalDateTime fechaActual = LocalDateTime.from(temporalAccessor);
 
-                TemporalAccessor temporalAccessor = formato.parse(fecha + " " + tiempo);
+            CitaDto citaDto1= servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, "Activo");
 
-                fechaActual = LocalDateTime.from(temporalAccessor);
+            String fechaTabla = agregadoFechas(hora, citaDto1, servicio, sede, fechaActual, fecha, tiempo);
 
-                CitaDto citaDto1= servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estado);
-
-                if(hora != 16 && citaDto1 == null){
-                    List<String> listadoFechas = servicioCita.buscarFechasPorServicioPorSedeYFecha(servicio.getIdServicio(), sede.getIdSede(), fechaActual);
-
-                    if(servicio.getNombre().equalsIgnoreCase("Caja")){
-                        if (listadoFechas.size() < 3){
-                            listaFechas.add(fecha + " " + tiempo);
-                        }
-                    }else {
-                        if (listadoFechas.size() < 2){
-                            listaFechas.add(fecha + " " + tiempo);
-                        }
-                    }
-                }
+            if(fechaTabla != null){
+                listaFechas.add(fechaTabla);
             }
         }
 
@@ -266,6 +192,27 @@ public class ControladorCita {
         model.addAttribute("servicio", servicio);
         model.addAttribute("sede", sede);
         return "crear_cita";
+
+    }
+
+    public String agregadoFechas(int hora, CitaDto citaDto, Servicio servicio, Sede sede, LocalDateTime fechaActual, String fecha, String tiempo){
+        String listaFecha = null;
+
+        if(hora != 16 && citaDto == null){
+            List<String> listadoFechas = servicioCita.buscarFechasPorServicioPorSedeYFecha(servicio.getIdServicio(), sede.getIdSede(), fechaActual);
+
+            if(servicio.getNombre().equalsIgnoreCase("Caja")){
+                if (listadoFechas.size() < 3){
+                    listaFecha = fecha + " " + tiempo;
+                }
+            }else {
+                if (listadoFechas.size() < 2){
+                    listaFecha = fecha + " " + tiempo;
+                }
+            }
+        }
+
+        return listaFecha;
     }
 
     @PostMapping({"/crear/cita/{codigoCliente}"})

@@ -41,6 +41,11 @@ public class ServicioCita implements OperacionesCita {
     }
 
     @Override
+    public CitaDto buscarPorPk(int pkEntidad) {
+        return modelMapper.map(repositorioCita.findById(pkEntidad).orElse(null), CitaDto.class);
+    }
+
+    @Override
     public List<CitaDto> buscarTodosPorCliente(ClienteDto clienteDto) {
         TypeToken<List<CitaDto>> typeToken = new TypeToken<>(){};
         return modelMapper.map(repositorioCita.findAllByCliente(modelMapper.map(clienteDto, Cliente.class)), typeToken.getType());
@@ -88,6 +93,7 @@ public class ServicioCita implements OperacionesCita {
         TypeToken<List<CitaDto>> typeToken = new TypeToken<>(){};
         return modelMapper.map(repositorioCita.findAllByServicioAndSede(idServicio,idSede, estado), typeToken.getType());
     }
+
 
 
 }

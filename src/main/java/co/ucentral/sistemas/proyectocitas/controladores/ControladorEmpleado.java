@@ -1,6 +1,7 @@
 package co.ucentral.sistemas.proyectocitas.controladores;
 
 
+import co.ucentral.sistemas.proyectocitas.entidadesdto.CitaDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.EmpleadoDto;
 import co.ucentral.sistemas.proyectocitas.servicios.ServicioCita;
 import co.ucentral.sistemas.proyectocitas.servicios.ServicioEmpleado;
@@ -32,7 +33,7 @@ public class ControladorEmpleado {
     public String visualizarAutenticar(@RequestParam(value = "error", required = false) String error, Model model){
 
         EmpleadoDto empleadoDto = new EmpleadoDto();
-        model.addAttribute("empleado", empleadoDto);
+        model.addAttribute("empleadoAutenticar", empleadoDto);
 
         /**
          * valida si la alerta en la vista va a ser desplegada o no.
@@ -55,7 +56,7 @@ public class ControladorEmpleado {
      * @return
      */
     @PostMapping({"/empleado"})
-    public String autenticacionUsuario(@ModelAttribute("empleado") EmpleadoDto empleadoDto, Model model, RedirectAttributes redirectAttributes){
+    public String autenticacionUsuario(@ModelAttribute("empleadoAutenticar") EmpleadoDto empleadoDto, Model model, RedirectAttributes redirectAttributes){
 
         EmpleadoDto empleadoDto1 = servicioEmpleado.autenticarPorCedulayContrasenia(empleadoDto.getCedula(), empleadoDto.getContrasenia());
 
@@ -79,4 +80,8 @@ public class ControladorEmpleado {
         return "empleados";
     }
 
+    @PostMapping({"/empleado/cita/cerrar/{idCita}"})
+    public String cerrarCita(@PathVariable int idCita, @ModelAttribute("cita") CitaDto citaDto, Model model){
+        return "redirect:/";
+    }
 }

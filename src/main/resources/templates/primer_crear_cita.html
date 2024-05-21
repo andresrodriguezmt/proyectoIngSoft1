@@ -47,7 +47,7 @@
 
             <div class="card-body col-10 offset-md-1">
 
-                <form th:action="@{/crear2/cita/{codigoCliente}(codigoCliente=${codigoCliente})}" method="get" th:object="${cita}">
+                <form th:action="@{/crear2/cita/{idCliente}(idCliente = ${codigoCliente})}" method="get" th:object="${cita}">
 
                     <div class="form-group">
                         <label class="form-label fs-3 text-dark" for="servicio"> Servicio </label>
