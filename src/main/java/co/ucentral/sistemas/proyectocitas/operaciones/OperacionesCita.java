@@ -14,6 +14,8 @@ public interface OperacionesCita {
 
     public CitaDto buscarPorPk(int pkEntidad);
 
+    public CitaDto modificar(CitaDto citaDto);
+
     public List<CitaDto> buscarTodosPorCliente(ClienteDto clienteDto);
 
     public List<CitaDto> buscarTodosPorFecha(LocalDateTime fecha);
@@ -25,4 +27,8 @@ public interface OperacionesCita {
     public List<String> buscarFechasPorServicioPorSedeYFecha(int idServicio, int idSede, LocalDateTime fecha);
 
     public List<CitaDto> buscarTodosPorServicioPorSedeYEstado(int idServicio, int idSede, String estado);
+
+    public List<CitaDto> buscarTodosPorClienteYEstado(int idCliente, String estado);
+
+    public List<CitaDto> buscarTodosPorServicioPorSedePorEstadoYEmpleado(int idServicio, int idSede, String estado, int idEmpleado);
 }

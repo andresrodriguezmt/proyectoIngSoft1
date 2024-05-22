@@ -46,6 +46,17 @@ public class ServicioCita implements OperacionesCita {
     }
 
     @Override
+    public CitaDto modificar(CitaDto citaDto) {
+
+        if(this.buscarPorPk(citaDto.getIdCita()) != null){
+            Cita cita = repositorioCita.save(modelMapper.map(citaDto, Cita.class));
+            return modelMapper.map(cita, CitaDto.class);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
     public List<CitaDto> buscarTodosPorCliente(ClienteDto clienteDto) {
         TypeToken<List<CitaDto>> typeToken = new TypeToken<>(){};
         return modelMapper.map(repositorioCita.findAllByCliente(modelMapper.map(clienteDto, Cliente.class)), typeToken.getType());
@@ -91,9 +102,21 @@ public class ServicioCita implements OperacionesCita {
     @Override
     public List<CitaDto> buscarTodosPorServicioPorSedeYEstado(int idServicio, int idSede, String estado) {
         TypeToken<List<CitaDto>> typeToken = new TypeToken<>(){};
-        return modelMapper.map(repositorioCita.findAllByServicioAndSede(idServicio,idSede, estado), typeToken.getType());
+        return modelMapper.map(repositorioCita.findAllByServicioBySedeAndEstado(idServicio,idSede, estado), typeToken.getType());
     }
 
+    @Override
+    public List<CitaDto> buscarTodosPorClienteYEstado(int idCliente, String estado) {
+        TypeToken<List<CitaDto>> typeToken = new TypeToken<>(){};
+
+        return modelMapper.map(repositorioCita.findAllByClienteAndEstado(idCliente,estado), typeToken.getType());
+    }
+
+    @Override
+    public List<CitaDto> buscarTodosPorServicioPorSedePorEstadoYEmpleado(int idServicio, int idSede, String estado, int idEmpleado) {
+        TypeToken<List<CitaDto>> typeToken = new TypeToken<>(){};
+        return modelMapper.map(repositorioCita.findAllByServicioBySedeByEstadoAndEmpleado(idServicio,idSede, estado,idEmpleado), typeToken.getType());
+    }
 
 
 }

@@ -73,28 +73,28 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		Sede sede1 = new Sede();
 		sede1.setNombre("Zona sur");
 		sede1.setDireccion("Avenida Caracas #26A-71 Sur");
-		sede1.setNumEmpleado(6);
+		sede1.setNumEmpleado(7);
 		sede1.setHoraApertura(8,0,0);
 		sede1.setHoraCierre(16,0,0);
 
 		Sede sede2 = new Sede();
 		sede2.setNombre("Zona centro");
 		sede2.setDireccion("Calle 31 #13ª-51");
-		sede2.setNumEmpleado(6);
+		sede2.setNumEmpleado(7);
 		sede2.setHoraApertura(8,0,0);
 		sede2.setHoraCierre(16,0,0);
 
 		Sede sede3 = new Sede();
 		sede3.setNombre("Zona norte");
 		sede3.setDireccion("Carrera 15 #91-46");
-		sede3.setNumEmpleado(6);
+		sede3.setNumEmpleado(7);
 		sede3.setHoraApertura(8,0,0);
 		sede3.setHoraCierre(16,0,0);
 
 		Sede sede4 = new Sede();
 		sede4.setNombre("Aeropuerto");
 		sede4.setDireccion("Av El Dorado 105 39 Nuevo Muelle International De Cargo");
-		sede4.setNumEmpleado(6);
+		sede4.setNumEmpleado(7);
 		sede4.setHoraApertura(8,0,0);
 		sede4.setHoraCierre(16,0,0);
 
@@ -111,6 +111,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS1.setEstado(estadoEmpleado);
 		empleadoS1.setCedula("1234567890");
 		empleadoS1.setContrasenia("Rodriguez123");
+		empleadoS1.setModulo(1);
 		empleadoS1.setSede(sede1);
 		empleadoS1.setServicio(servicioCaja);
 
@@ -120,6 +121,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS2.setEstado(estadoEmpleado);
 		empleadoS2.setCedula("1045678901");
 		empleadoS2.setContrasenia("Martinez234");
+		empleadoS2.setModulo(2);
 		empleadoS2.setSede(sede1);
 		empleadoS2.setServicio(servicioCaja);
 
@@ -129,6 +131,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS3.setEstado(estadoEmpleado);
 		empleadoS3.setCedula("1046789012");
 		empleadoS3.setContrasenia("Garcia345");
+		empleadoS3.setModulo(3);
 		empleadoS3.setSede(sede1);
 		empleadoS3.setServicio(servicioCaja);
 
@@ -138,6 +141,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS4.setEstado(estadoEmpleado);
 		empleadoS4.setCedula("1056789012");
 		empleadoS4.setContrasenia("Gomez456");
+		empleadoS4.setModulo(1);
 		empleadoS4.setSede(sede1);
 		empleadoS4.setServicio(servicioAsesoria);
 
@@ -147,6 +151,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS5.setEstado(estadoEmpleado);
 		empleadoS5.setCedula("1046789012");
 		empleadoS5.setContrasenia("Garcia345");
+		empleadoS5.setModulo(2);
 		empleadoS5.setSede(sede1);
 		empleadoS5.setServicio(servicioAsesoria);
 
@@ -156,6 +161,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS6.setEstado(estadoEmpleado);
 		empleadoS6.setCedula("1078901234");
 		empleadoS6.setContrasenia("Lopez567");
+		empleadoS6.setModulo(1);
 		empleadoS6.setSede(sede1);
 		empleadoS6.setServicio(servicioObtenerProd);
 
@@ -165,6 +171,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoS7.setEstado(estadoEmpleado);
 		empleadoS7.setCedula("1067901234");
 		empleadoS7.setContrasenia("Rodriguez567");
+		empleadoS7.setModulo(2);
 		empleadoS7.setSede(sede1);
 		empleadoS7.setServicio(servicioObtenerProd);
 
@@ -174,6 +181,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC1.setEstado(estadoEmpleado);
 		empleadoC1.setCedula("1290123456");
 		empleadoC1.setContrasenia("Hernandez789");
+		empleadoC1.setModulo(1);
 		empleadoC1.setSede(sede2);
 		empleadoC1.setServicio(servicioCaja);
 
@@ -183,6 +191,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC2.setEstado(estadoEmpleado);
 		empleadoC2.setCedula("1002234567");
 		empleadoC2.setContrasenia("Sanchez890");
+		empleadoC2.setModulo(2);
 		empleadoC2.setSede(sede2);
 		empleadoC2.setServicio(servicioCaja);
 
@@ -192,6 +201,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC3.setEstado(estadoEmpleado);
 		empleadoC3.setCedula("1041234567");
 		empleadoC3.setContrasenia("Perez901");
+		empleadoC3.setModulo(3);
 		empleadoC3.setSede(sede2);
 		empleadoC3.setServicio(servicioCaja);
 
@@ -201,6 +211,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC4.setEstado(estadoEmpleado);
 		empleadoC4.setCedula("1023456789");
 		empleadoC4.setContrasenia("Ramirez012");
+		empleadoC4.setModulo(1);
 		empleadoC4.setSede(sede2);
 		empleadoC4.setServicio(servicioAsesoria);
 
@@ -210,6 +221,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC5.setEstado(estadoEmpleado);
 		empleadoC5.setCedula("1034506789");
 		empleadoC5.setContrasenia("Diaz123");
+		empleadoC5.setModulo(2);
 		empleadoC5.setSede(sede2);
 		empleadoC5.setServicio(servicioAsesoria);
 
@@ -219,6 +231,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC6.setEstado(estadoEmpleado);
 		empleadoC6.setCedula("1075607891");
 		empleadoC6.setContrasenia("Torres234");
+		empleadoC6.setModulo(1);
 		empleadoC6.setSede(sede2);
 		empleadoC6.setServicio(servicioObtenerProd);
 
@@ -228,6 +241,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoC7.setEstado(estadoEmpleado);
 		empleadoC7.setCedula("1025567891");
 		empleadoC7.setContrasenia("Loaiza234");
+		empleadoC7.setModulo(2);
 		empleadoC7.setSede(sede2);
 		empleadoC7.setServicio(servicioObtenerProd);
 
@@ -237,6 +251,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN1.setEstado(estadoEmpleado);
 		empleadoN1.setCedula("1256708912");
 		empleadoN1.setContrasenia("Alfonso345");
+		empleadoN1.setModulo(1);
 		empleadoN1.setSede(sede3);
 		empleadoN1.setServicio(servicioCaja);
 
@@ -246,6 +261,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN2.setEstado(estadoEmpleado);
 		empleadoN2.setCedula("1056780912");
 		empleadoN2.setContrasenia("Rojas456");
+		empleadoN2.setModulo(2);
 		empleadoN2.setSede(sede3);
 		empleadoN2.setServicio(servicioCaja);
 
@@ -255,6 +271,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN3.setEstado(estadoEmpleado);
 		empleadoN3.setCedula("1078901234");
 		empleadoN3.setContrasenia("Moreno567");
+		empleadoN3.setModulo(3);
 		empleadoN3.setSede(sede3);
 		empleadoN3.setServicio(servicioCaja);
 
@@ -264,6 +281,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN4.setEstado(estadoEmpleado);
 		empleadoN4.setCedula("1089012345");
 		empleadoN4.setContrasenia("Vargas678");
+		empleadoN4.setModulo(1);
 		empleadoN4.setSede(sede3);
 		empleadoN4.setServicio(servicioAsesoria);
 
@@ -273,6 +291,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN5.setEstado(estadoEmpleado);
 		empleadoN5.setCedula("1090123456");
 		empleadoN5.setContrasenia("Ortiz789");
+		empleadoN5.setModulo(2);
 		empleadoN5.setSede(sede3);
 		empleadoN5.setServicio(servicioAsesoria);
 
@@ -282,8 +301,9 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN6.setEstado(estadoEmpleado);
 		empleadoN6.setCedula("1001234567");
 		empleadoN6.setContrasenia("Jimenez890");
+		empleadoN6.setModulo(1);
 		empleadoN6.setSede(sede3);
-		empleadoN6.setServicio(servicioAsesoria);
+		empleadoN6.setServicio(servicioObtenerProd);
 
 		Empleado empleadoN7 = new Empleado();
 		empleadoN7.setNombre("Daniela Perez Ramirez");
@@ -291,8 +311,9 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoN7.setEstado(estadoEmpleado);
 		empleadoN7.setCedula("1091234567");
 		empleadoN7.setContrasenia("Perez810");
+		empleadoN7.setModulo(2);
 		empleadoN7.setSede(sede3);
-		empleadoN7.setServicio(servicioAsesoria);
+		empleadoN7.setServicio(servicioObtenerProd);
 
 		Empleado empleadoA1 = new Empleado();
 		empleadoA1.setNombre("Lucas Mendoza Castro");
@@ -300,6 +321,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA1.setEstado(estadoEmpleado);
 		empleadoA1.setCedula("1059701912");
 		empleadoA1.setContrasenia("Mendoza324");
+		empleadoA1.setModulo(1);
 		empleadoA1.setSede(sede4);
 		empleadoA1.setServicio(servicioCaja);
 
@@ -309,6 +331,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA2.setEstado(estadoEmpleado);
 		empleadoA2.setCedula("1012780212");
 		empleadoA2.setContrasenia("Pardo625");
+		empleadoA2.setModulo(2);
 		empleadoA2.setSede(sede4);
 		empleadoA2.setServicio(servicioCaja);
 
@@ -318,6 +341,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA3.setEstado(estadoEmpleado);
 		empleadoA3.setCedula("1038901231");
 		empleadoA3.setContrasenia("Alvarado926");
+		empleadoA3.setModulo(3);
 		empleadoA3.setSede(sede4);
 		empleadoA3.setServicio(servicioCaja);
 
@@ -327,6 +351,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA4.setEstado(estadoEmpleado);
 		empleadoA4.setCedula("1009082335");
 		empleadoA4.setContrasenia("Franco227");
+		empleadoA4.setModulo(1);
 		empleadoA4.setSede(sede4);
 		empleadoA4.setServicio(servicioAsesoria);
 
@@ -336,6 +361,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA5.setEstado(estadoEmpleado);
 		empleadoA5.setCedula("1001335561");
 		empleadoA5.setContrasenia("Ortiz789");
+		empleadoA5.setModulo(2);
 		empleadoA5.setSede(sede4);
 		empleadoA5.setServicio(servicioAsesoria);
 
@@ -345,6 +371,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA6.setEstado(estadoEmpleado);
 		empleadoA6.setCedula("1000234527");
 		empleadoA6.setContrasenia("Velasco829");
+		empleadoA6.setModulo(1);
 		empleadoA6.setSede(sede4);
 		empleadoA6.setServicio(servicioObtenerProd);
 
@@ -354,6 +381,7 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA7.setEstado(estadoEmpleado);
 		empleadoA7.setCedula("1013234927");
 		empleadoA7.setContrasenia("Pachon809");
+		empleadoA7.setModulo(2);
 		empleadoA7.setSede(sede4);
 		empleadoA7.setServicio(servicioObtenerProd);
 

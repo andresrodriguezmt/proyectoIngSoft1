@@ -1,14 +1,13 @@
 package co.ucentral.sistemas.proyectocitas.controladores;
 
 import co.ucentral.sistemas.proyectocitas.entidades.Cliente;
+import co.ucentral.sistemas.proyectocitas.entidades.Empleado;
 import co.ucentral.sistemas.proyectocitas.entidades.Sede;
 import co.ucentral.sistemas.proyectocitas.entidades.Servicio;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.CitaDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.ClienteDto;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioCita;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioCliente;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioSede;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioServicio;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.EmpleadoDto;
+import co.ucentral.sistemas.proyectocitas.servicios.*;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -35,12 +34,15 @@ public class ControladorCita {
     ServicioSede servicioSede;
     ServicioServicio servicioServicio;
     ServicioCliente servicioCliente;
+    ServicioEmpleado servicioEmpleado;
+    String estadoActivo = "Activo";
 
-    public ControladorCita(ServicioCita servicioCita, ServicioSede servicioSede, ServicioServicio servicioServicio, ServicioCliente servicioCliente) {
+    public ControladorCita(ServicioCita servicioCita, ServicioSede servicioSede, ServicioServicio servicioServicio, ServicioCliente servicioCliente, ServicioEmpleado servicioEmpleado) {
         this.servicioCita = servicioCita;
         this.servicioSede = servicioSede;
         this.servicioServicio = servicioServicio;
         this.servicioCliente = servicioCliente;
+        this.servicioEmpleado = servicioEmpleado;
     }
 
     @GetMapping("/principal/cliente/{codigo}")
@@ -48,7 +50,9 @@ public class ControladorCita {
 
         ClienteDto clienteDto = servicioCliente.buscarPorPk(codigo);
 
-        model.addAttribute("listaCitas", servicioCita.buscarTodosPorCliente(clienteDto));
+        model.addAttribute("listaCitasAsistencia", servicioCita.buscarTodosPorClienteYEstado(codigo, "En espera"));
+        model.addAttribute("listaCitas", servicioCita.buscarTodosPorClienteYEstado(codigo, estadoActivo));
+        model.addAttribute("listaCitasFinalizados", servicioCita.buscarTodosPorClienteYEstado(codigo, "Terminado"));
         model.addAttribute("cliente", clienteDto);
         return "clientes";
     }
@@ -177,7 +181,7 @@ public class ControladorCita {
 
             LocalDateTime fechaActual = LocalDateTime.from(temporalAccessor);
 
-            CitaDto citaDto1= servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, "Activo");
+            CitaDto citaDto1= servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoActivo);
 
             String fechaTabla = agregadoFechas(hora, citaDto1, servicio, sede, fechaActual, fecha, tiempo);
 
@@ -223,7 +227,7 @@ public class ControladorCita {
 
         Cliente cliente = modelMapper.map(servicioCliente.buscarPorPk(codigoCliente), Cliente.class);
 
-        citaDto.setEstado("Activo");
+        citaDto.setEstado(estadoActivo);
         citaDto.setNumTurno(servicioCita.buscarUltimoTurnoPorServicioYSede(servicio.getIdServicio(), sede.getIdSede()));
         citaDto.setCliente(cliente);
         citaDto.setSede(sede);
@@ -236,5 +240,27 @@ public class ControladorCita {
         return "redirect:/principal/cliente/{codigo}";
     }
 
+
+    @GetMapping({"/llamado/confirmado/{idCita}/{idEmpleado}"})
+    public String confirmarLlamado(@PathVariable int idCita, @PathVariable int idEmpleado, RedirectAttributes redirectAttributes){
+
+        CitaDto citaDto = servicioCita.buscarPorPk(idCita);
+        EmpleadoDto empleadoDto = servicioEmpleado.buscarPorPk(idEmpleado);
+        ClienteDto clienteDto = servicioCliente.buscarPorPk(citaDto.getCliente().getIdCliente());
+
+        empleadoDto.setEstado("Ocupado");
+        servicioEmpleado.modificar(empleadoDto);
+
+        clienteDto.setEstado("Atendiendo");
+        servicioCliente.modificar(clienteDto);
+
+        citaDto.setCliente(modelMapper.map(clienteDto, Cliente.class));
+        citaDto.setEmpleado(modelMapper.map(empleadoDto, Empleado.class));
+        citaDto.setEstado("Atendiendo");
+        servicioCita.modificar(citaDto);
+
+        redirectAttributes.addAttribute("idEmpleado", idEmpleado);
+        return "redirect:/principal/empleado/{idEmpleado}";
+    }
 
 }

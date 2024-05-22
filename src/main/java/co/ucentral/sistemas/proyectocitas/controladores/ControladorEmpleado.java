@@ -1,10 +1,15 @@
 package co.ucentral.sistemas.proyectocitas.controladores;
 
 
+import co.ucentral.sistemas.proyectocitas.entidades.Cliente;
+import co.ucentral.sistemas.proyectocitas.entidades.Empleado;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.CitaDto;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.ClienteDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.EmpleadoDto;
 import co.ucentral.sistemas.proyectocitas.servicios.ServicioCita;
+import co.ucentral.sistemas.proyectocitas.servicios.ServicioCliente;
 import co.ucentral.sistemas.proyectocitas.servicios.ServicioEmpleado;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +18,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class ControladorEmpleado {
 
-    ServicioEmpleado servicioEmpleado;
+    private final ModelMapper modelMapper = new ModelMapper();
 
+    ServicioEmpleado servicioEmpleado;
+    ServicioCliente servicioCliente;
     ServicioCita servicioCita;
 
-    public ControladorEmpleado(ServicioEmpleado servicioEmpleado, ServicioCita servicioCita) {
+    public ControladorEmpleado(ServicioEmpleado servicioEmpleado, ServicioCita servicioCita, ServicioCliente servicioCliente) {
         this.servicioEmpleado = servicioEmpleado;
         this.servicioCita = servicioCita;
+        this.servicioCliente = servicioCliente;
     }
 
     /**
@@ -77,11 +85,36 @@ public class ControladorEmpleado {
 
         model.addAttribute("empleado", empleadoDto);
         model.addAttribute("listaCitas", servicioCita.buscarTodosPorServicioPorSedeYEstado(empleadoDto.getServicio().getIdServicio(), empleadoDto.getSede().getIdSede(), "Activo"));
+        model.addAttribute("listaCitasAtencion", servicioCita.buscarTodosPorServicioPorSedePorEstadoYEmpleado(empleadoDto.getServicio().getIdServicio(), empleadoDto.getSede().getIdSede(), "Atendiendo", idEmpleado));
         return "empleados";
     }
 
-    @PostMapping({"/empleado/cita/cerrar/{idCita}"})
-    public String cerrarCita(@PathVariable int idCita, @ModelAttribute("cita") CitaDto citaDto, Model model){
-        return "redirect:/";
+    @GetMapping({"/cita/llamado/{idCita}/{idEmpleado}"})
+    public String ventanaLlamado(@PathVariable int idCita, @PathVariable int idEmpleado, Model model, RedirectAttributes redirectAttributes){
+
+        CitaDto citaDto = servicioCita.buscarPorPk(idCita);
+        EmpleadoDto empleadoDto = servicioEmpleado.buscarPorPk(idEmpleado);
+        ClienteDto clienteDto = servicioCliente.buscarPorPk(citaDto.getCliente().getIdCliente());
+
+        String estado = "En espera";
+
+        empleadoDto.setEstado(estado);
+        servicioEmpleado.modificar(empleadoDto);
+
+        clienteDto.setEstado(estado);
+        servicioCliente.modificar(clienteDto);
+
+        citaDto.setCliente(modelMapper.map(clienteDto, Cliente.class));
+        citaDto.setEmpleado(modelMapper.map(empleadoDto, Empleado.class));
+        citaDto.setEstado(estado);
+        servicioCita.modificar(citaDto);
+
+        model.addAttribute("empleadoAsignado", idEmpleado);
+        model.addAttribute("citaAsignada", idCita);
+        return "llamadoEnSala";
     }
+
+
+
+
 }

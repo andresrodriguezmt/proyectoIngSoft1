@@ -12,6 +12,7 @@ public interface OperacionesCliente {
 
     public ClienteDto buscarPorPk(int pkEntidad);
 
+    public ClienteDto modificar(ClienteDto clienteDto);
 }
 
 

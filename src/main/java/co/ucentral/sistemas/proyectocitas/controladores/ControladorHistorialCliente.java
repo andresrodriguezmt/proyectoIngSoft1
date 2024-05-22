@@ -38,8 +38,8 @@ public class ControladorHistorialCliente {
         this.servicioEmpleado = servicioEmpleado;
     }
 
-    @GetMapping({"/cerrar/cita/{idEmpleado}/{idCita}"})
-    public String formularioTerminarCita(@PathVariable int idEmpleado, @PathVariable int idCita,  Model model){
+    @GetMapping({"/cerrar/cita/{idCita}"})
+    public String formularioTerminarCita(@PathVariable int idCita,  Model model){
 
         HistorialClienteDto historialClienteDto = new HistorialClienteDto();
 
@@ -49,7 +49,7 @@ public class ControladorHistorialCliente {
         String fecha = String.format("%04d-%02d-%02d", citaDto.getFecha().getYear(),citaDto.getFecha().getMonthValue(), citaDto.getFecha().getDayOfMonth());
         String tiempo = String.format("%02d:%02d", citaDto.getFecha().getHour(), citaDto.getFecha().getMinute());
 
-        model.addAttribute("pkEmpleado", idEmpleado);
+        model.addAttribute("pkEmpleado", citaDto.getEmpleado().getIdEmpleado());
         model.addAttribute("cita", citaDto);
         model.addAttribute("fecha",fecha + " " + tiempo);
         model.addAttribute("historialCliente", historialClienteDto);
@@ -60,15 +60,21 @@ public class ControladorHistorialCliente {
 
     @PostMapping({"/terminar/cita/{idCita}"})
     public String terminarCita(@PathVariable int idCita, @ModelAttribute("historialCliente") HistorialClienteDto historialClienteDto, RedirectAttributes redirectAttributes){
-        CitaDto citaDto = servicioCita.buscarPorPk(idCita);
 
         EmpleadoDto empleadoDto = servicioEmpleado.buscarPorPk(Integer.parseInt(historialClienteDto.getCita().getEmpleado().getNombre()));
 
+
+        CitaDto citaDto = servicioCita.buscarPorPk(idCita);
+        citaDto.setEstado("Terminado");
         citaDto.setEmpleado(modelMapper.map(empleadoDto, Empleado.class));
 
         historialClienteDto.setCita(modelMapper.map(citaDto, Cita.class));
-
         servicioHistorialCliente.crear(historialClienteDto);
+
+        empleadoDto.setEstado("Libre");
+        servicioEmpleado.modificar(empleadoDto);
+
+        servicioCita.modificar(citaDto);
 
         redirectAttributes.addAttribute("idEmpleado", citaDto.getEmpleado().getIdEmpleado());
         return "redirect:/principal/empleado/{idEmpleado}";

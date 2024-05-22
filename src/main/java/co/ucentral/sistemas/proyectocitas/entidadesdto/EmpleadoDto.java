@@ -17,6 +17,7 @@ public class EmpleadoDto {
     private String estado;
     private String cedula;
     private String contrasenia;
+    private int modulo;
     private Sede sede;
     private Servicio servicio;
 }

@@ -9,6 +9,8 @@ public interface OperacionesEmpleado {
     public EmpleadoDto autenticarPorCedulayContrasenia(String cedula, String contrasenia);
 
     public EmpleadoDto buscarPorPk(int pk);
+
+    public EmpleadoDto modificar(EmpleadoDto empleadoDto);
 }
 
 

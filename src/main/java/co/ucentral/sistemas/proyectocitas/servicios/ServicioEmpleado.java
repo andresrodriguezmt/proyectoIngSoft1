@@ -45,5 +45,17 @@ public class ServicioEmpleado implements OperacionesEmpleado {
     public EmpleadoDto buscarPorPk(int pk) {
         return modelMapper.map(repositorioEmpleado.findById(pk).orElse(null), EmpleadoDto.class);
     }
+
+    @Override
+    public EmpleadoDto modificar(EmpleadoDto empleadoDto) {
+
+        if(this.buscarPorPk(empleadoDto.getIdEmpleado()) != null){
+            Empleado empleado = repositorioEmpleado.save(modelMapper.map(empleadoDto, Empleado.class));
+            return modelMapper.map(empleado, EmpleadoDto.class);
+        }else{
+            return null;
+        }
+
+    }
 }
 

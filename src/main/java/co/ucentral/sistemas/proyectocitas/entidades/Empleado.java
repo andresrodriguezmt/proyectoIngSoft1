@@ -33,6 +33,9 @@ public class Empleado {
     @Column(name = "EMP_CONTRASENIA", nullable = false)
     private String contrasenia;
 
+    @Column(name = "EMP_MODULO", nullable = false)
+    private int modulo;
+
     @ManyToOne
     @JoinColumn(name = "SED_ID")
     private Sede sede;

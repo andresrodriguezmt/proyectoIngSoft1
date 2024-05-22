@@ -58,4 +58,14 @@ public class ServicioCliente implements OperacionesCliente {
         return modelMapper.map(repositorioCliente.findById(pkEntidad).orElse(null), ClienteDto.class);
     }
 
+    @Override
+    public ClienteDto modificar(ClienteDto clienteDto) {
+        if(this.buscarPorPk(clienteDto.getIdCliente()) != null){
+            Cliente cliente = repositorioCliente.save(modelMapper.map(clienteDto, Cliente.class));
+            return modelMapper.map(cliente, ClienteDto.class);
+        }else{
+            return null;
+        }
+    }
+
 }
