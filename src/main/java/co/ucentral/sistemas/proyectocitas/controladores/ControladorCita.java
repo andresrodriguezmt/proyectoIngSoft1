@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class ControladorCita {
     ServicioCliente servicioCliente;
     ServicioEmpleado servicioEmpleado;
     String estadoActivo = "Activo";
+    String estadoTerminado = "Terminado";
+    String estadoEspera = "En espera";
 
     public ControladorCita(ServicioCita servicioCita, ServicioSede servicioSede, ServicioServicio servicioServicio, ServicioCliente servicioCliente, ServicioEmpleado servicioEmpleado) {
         this.servicioCita = servicioCita;
@@ -181,9 +184,7 @@ public class ControladorCita {
 
             LocalDateTime fechaActual = LocalDateTime.from(temporalAccessor);
 
-            CitaDto citaDto1= servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoActivo);
-
-            String fechaTabla = agregadoFechas(hora, citaDto1, servicio, sede, fechaActual, fecha, tiempo);
+            String fechaTabla = agregadoFechas(hora, codigoCliente, servicio, sede, fechaActual, fecha, tiempo);
 
             if(fechaTabla != null){
                 listaFechas.add(fechaTabla);
@@ -199,10 +200,15 @@ public class ControladorCita {
 
     }
 
-    public String agregadoFechas(int hora, CitaDto citaDto, Servicio servicio, Sede sede, LocalDateTime fechaActual, String fecha, String tiempo){
+    public String agregadoFechas(int hora, int codigoCliente, Servicio servicio, Sede sede, LocalDateTime fechaActual, String fecha, String tiempo){
         String listaFecha = null;
 
-        if(hora != 16 && citaDto == null){
+        CitaDto citaDto1 = servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoActivo);
+        CitaDto citaDto2 = servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoTerminado);
+        CitaDto citaDto3 = servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoEspera);
+
+
+        if(hora != 16 && citaDto1 == null && citaDto2 == null && citaDto3 == null){
             List<String> listadoFechas = servicioCita.buscarFechasPorServicioPorSedeYFecha(servicio.getIdServicio(), sede.getIdSede(), fechaActual);
 
             if(servicio.getNombre().equalsIgnoreCase("Caja")){
@@ -257,6 +263,7 @@ public class ControladorCita {
         citaDto.setCliente(modelMapper.map(clienteDto, Cliente.class));
         citaDto.setEmpleado(modelMapper.map(empleadoDto, Empleado.class));
         citaDto.setEstado("Atendiendo");
+        citaDto.setHoraInicio(LocalTime.now());
         servicioCita.modificar(citaDto);
 
         redirectAttributes.addAttribute("idEmpleado", idEmpleado);
