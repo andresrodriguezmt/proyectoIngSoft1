@@ -1,7 +1,6 @@
 package co.ucentral.sistemas.proyectocitas.controladores;
 
 import co.ucentral.sistemas.proyectocitas.entidades.Cita;
-import co.ucentral.sistemas.proyectocitas.entidades.Empleado;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.CitaDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.ClienteDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.EmpleadoDto;
@@ -58,7 +57,6 @@ public class ControladorHistorialCliente {
         String fecha = String.format("%04d-%02d-%02d", citaDto.getFecha().getYear(),citaDto.getFecha().getMonthValue(), citaDto.getFecha().getDayOfMonth());
         String tiempo = String.format("%02d:%02d", citaDto.getFecha().getHour(), citaDto.getFecha().getMinute());
 
-        model.addAttribute("pkEmpleado", citaDto.getEmpleado().getIdEmpleado());
         model.addAttribute("cita", citaDto);
         model.addAttribute("fecha",fecha + " " + tiempo);
         model.addAttribute("historialCliente", historialClienteDto);
@@ -70,20 +68,22 @@ public class ControladorHistorialCliente {
     @PostMapping({"/terminar/cita/{idCita}"})
     public String terminarCita(@PathVariable int idCita, @ModelAttribute("historialCliente") HistorialClienteDto historialClienteDto, RedirectAttributes redirectAttributes){
 
-        EmpleadoDto empleadoDto = servicioEmpleado.buscarPorPk(Integer.parseInt(historialClienteDto.getCita().getEmpleado().getNombre()));
-
+        LocalTime horaFin = LocalTime.now();
 
         CitaDto citaDto = servicioCita.buscarPorPk(idCita);
         citaDto.setEstado(estadoTerminado);
-        citaDto.setEmpleado(modelMapper.map(empleadoDto, Empleado.class));
+        citaDto.setDuracion(LocalTime.of((horaFin.getHour() - citaDto.getHoraInicio().getHour()),(horaFin.getMinute() - citaDto.getHoraInicio().getMinute()),(horaFin.getSecond()) - citaDto.getHoraInicio().getSecond()));
+
+        servicioCita.modificar(citaDto);
 
         historialClienteDto.setCita(modelMapper.map(citaDto, Cita.class));
         servicioHistorialCliente.crear(historialClienteDto);
 
-        empleadoDto.setEstado(estadoLibre);
-        servicioEmpleado.modificar(empleadoDto);
+        citaDto.getEmpleado().setEstado(estadoLibre);
+        servicioEmpleado.modificar(modelMapper.map(citaDto.getEmpleado(), EmpleadoDto.class));
 
-        servicioCita.modificar(citaDto);
+        citaDto.getCliente().setEstado(estadoLibre);
+        servicioCliente.modificar(modelMapper.map(citaDto.getCliente(), ClienteDto.class));
 
         redirectAttributes.addAttribute("idEmpleado", citaDto.getEmpleado().getIdEmpleado());
         return "redirect:/principal/empleado/{idEmpleado}";
@@ -97,6 +97,7 @@ public class ControladorHistorialCliente {
 
         citaDto.setEstado(estadoTerminado);
         citaDto.setHoraInicio(LocalTime.now());
+        citaDto.setDuracion(LocalTime.of(0,0,0));
         servicioCita.modificar(citaDto);
 
         historialClienteDto.setCita(modelMapper.map(citaDto, Cita.class));

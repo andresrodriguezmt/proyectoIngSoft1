@@ -4,7 +4,6 @@ package co.ucentral.sistemas.proyectocitas.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -35,6 +34,9 @@ public class Cita {
 
     @Column(name = "CIT_HORAINICIO", nullable = true)
     private LocalTime horaInicio;
+
+    @Column(name = "CIT_DURACION", nullable = true)
+    private LocalTime duracion;
 
     @ManyToOne
     @JoinColumn(name = "EMP_ID")

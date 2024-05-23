@@ -30,7 +30,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="navbar-brand fs-4" style="color: white" href="#" th:href="@{/principal/empleado/{idEmpleado}(idEmpleado = ${pkEmpleado})}">Principal</a>
+                        <a class="navbar-brand fs-4" style="color: white" href="#" th:href="@{/principal/empleado/{idEmpleado}(idEmpleado = ${cita.Empleado.idEmpleado})}">Principal</a>
                     </li>
 
                     <li class="nav-item">
@@ -42,7 +42,7 @@
 
     <br> <br>
 
-    <div class = "container h col-8 offset-md-2" style="border: 4px solid #000000; background-color: rgb(170, 213, 184);">
+    <div class = "container h col-8 offset-md-2" style="border: 4px solid #000000; background-color: rgb(236, 207, 200);">
         <br><br>
         <div class="container col-8 offset-md-1">
             <h1  style="color: black">Formulario terminar cita</h1>
@@ -90,7 +90,7 @@
                     <label class=" form-label fs-3 text-dark" for="empleado">Empleado</label>
 
                     <select id="empleado" class="form-select form-select-lg mb-3" aria-label="Large select example"  th:field="*{Cita.Empleado.nombre}">
-                        <option th:value="${pkEmpleado}" th:text="${pkEmpleado}"></option>
+                        <option th:value="${cita.Empleado.nombre}" th:text="${cita.Empleado.nombre}"></option>
                     </select>
                 </div>
 

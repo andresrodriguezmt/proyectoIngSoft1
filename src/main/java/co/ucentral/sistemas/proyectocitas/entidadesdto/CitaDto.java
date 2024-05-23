@@ -33,6 +33,8 @@ public class CitaDto {
 
     private LocalTime horaInicio;
 
+    private LocalTime duracion;
+
     private Empleado empleado;
 
     private Sede sede;
