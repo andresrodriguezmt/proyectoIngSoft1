@@ -1,6 +1,7 @@
 package co.ucentral.sistemas.proyectocitas.operaciones;
 
 import co.ucentral.sistemas.proyectocitas.entidadesdto.HistorialClienteDto;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.ReporteEmpleadoCantidadAtendidoDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.ReporteServicioMasUsadoDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.ReporteTiempoPromedioAtencionDto;
 
@@ -15,4 +16,6 @@ public interface OperacionesHistorialCliente {
     public ReporteServicioMasUsadoDto reporteServicioMasUsado(long idSede);
 
     public ReporteTiempoPromedioAtencionDto reporteTiempoPromedioAtencion(int numeroCitas, int idSede, int idServicio);
+
+    public ReporteEmpleadoCantidadAtendidoDto reporteEmpleadoMasClienteAtendido();
 }

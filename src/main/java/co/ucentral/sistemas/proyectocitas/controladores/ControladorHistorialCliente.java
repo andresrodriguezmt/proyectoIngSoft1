@@ -131,11 +131,14 @@ public class ControladorHistorialCliente {
         List<ReporteServicioMasUsadoDto> listaReporteServicioMasUsado = reporteServicioMasUsado();
 
         model.addAttribute(nombreIdEmpleado, idEmpleado);
+        model.addAttribute("listaReporteServicioMasUsado", listaReporteServicioMasUsado);
+
         model.addAttribute("listaReporteTiempoPromedio1", reporteTiempoPromedioAtencion(1));
         model.addAttribute("listaReporteTiempoPromedio2", reporteTiempoPromedioAtencion(2));
         model.addAttribute("listaReporteTiempoPromedio3", reporteTiempoPromedioAtencion(3));
         model.addAttribute("listaReporteTiempoPromedio4", reporteTiempoPromedioAtencion(4));
-        model.addAttribute("listaReporteServicioMasUsado", listaReporteServicioMasUsado);
+
+        model.addAttribute("empleadoMasAtencion", servicioHistorialCliente.reporteEmpleadoMasClienteAtendido());
         return "reportes";
     }
 

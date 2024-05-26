@@ -85,12 +85,12 @@
                 <!-- División derecha -->
                 <div class="col-md-8" style="text-align: justify;">
                     <br>
-                    <h1>Tiempo promedio de atención  </h1>
+                    <h1>Tiempo promedio de atención por sede</h1>
 
                     <br>
                     <br>
 
-                    <h2>Sede: Zona sur</h2>
+                    <h3>Zona sur</h3>
                     <br>
 
                     <table class="table table-striped table-bordered text-center">
@@ -112,7 +112,7 @@
                     <hr>
                     <br>
 
-                    <h2>Sede: Zona centro</h2>
+                    <h3>Zona centro</h3>
                     <br>
                     <table class="table table-striped table-bordered text-center">
                         <thead class="table-dark">
@@ -134,7 +134,7 @@
                     <hr>
                     <br>
 
-                    <h2>Sede: Zona norte</h2>
+                    <h3>Zona norte</h3>
                     <br>
 
                     <table class="table table-striped table-bordered text-center">
@@ -157,7 +157,7 @@
                     <hr>
                     <br>
 
-                    <h2>Sede: Aeropuerto</h2>
+                    <h3>Aeropuerto</h3>
 
                     <br>
 
@@ -180,10 +180,50 @@
 
             </div>
 
+
+
+            <br> <br>
+            <hr>
+
+            <br> <br>
+
+            <div class="row" style="display: flex; align-items: center;">
+                <!-- División izquierda -->
+                <div class="col-md-3">
+
+                    <h1>Reporte 3</h1>
+
+                </div>
+                <!-- División derecha -->
+                <div class="col-md-8" style="text-align: justify;">
+                    <br>
+                    <h1>Empleado con más clientes atendidos</h1>
+
+                    <br><br>
+
+                    <table class="table table-striped table-bordered text-center">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Sede</th>
+                            <th>Servicio</th>
+                            <th>Cantidad clientes atendidos</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${empleadoMasAtencion.empleado}">Empleado</td>
+                            <td th:text="${empleadoMasAtencion.sede}">Sede</td>
+                            <td th:text="${empleadoMasAtencion.servicio}">Servicio</td>
+                            <td th:text="${empleadoMasAtencion.cantidadAtendido}">Cantidad Atendidos</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <br>
+                </div>
+
+            </div>
         </div>
-
-
-
-
     </body>
 </html>
