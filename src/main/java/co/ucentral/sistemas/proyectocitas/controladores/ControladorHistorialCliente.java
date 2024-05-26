@@ -139,6 +139,7 @@ public class ControladorHistorialCliente {
         model.addAttribute("listaReporteTiempoPromedio4", reporteTiempoPromedioAtencion(4));
 
         model.addAttribute("empleadoMasAtencion", servicioHistorialCliente.reporteEmpleadoMasClienteAtendido());
+        model.addAttribute("empleadoMenosAtencion", servicioHistorialCliente.reporteEmpleadoMenosClienteAtendido());
         return "reportes";
     }
 

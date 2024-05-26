@@ -92,4 +92,22 @@ public class ServicioHistorialCliente implements OperacionesHistorialCliente {
             return null;
         }
     }
+
+    @Override
+    public ReporteEmpleadoCantidadAtendidoDto reporteEmpleadoMenosClienteAtendido() {
+
+        TercerCuartoReporteDto reporte = repositorioHistorialCliente.reporteEmpleadoClientesMenosAtendidos();
+
+        if(reporte != null){
+            return ReporteEmpleadoCantidadAtendidoDto
+                    .builder()
+                    .empleado(reporte.getNombreEmpleado())
+                    .sede(reporte.getNombreSede())
+                    .servicio(reporte.getNombreServicio())
+                    .cantidadAtendido(reporte.getCantidadAtencion())
+                    .build();
+        }else {
+            return null;
+        }
+    }
 }

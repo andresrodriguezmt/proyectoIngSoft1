@@ -19,4 +19,6 @@ public interface RepositorioHistorialCliente extends JpaRepository<HistorialClie
     @Query(value = "select EMP.emp_nombre as NombreEmpleado, SED.sed_nombre as NombreSede, SER.ser_nombre as NombreServicio, count(*) as CantidadAtencion from historialCliente as HC, cita as CI, servicio as SER, sede as SED, empleado as EMP where HC.cit_id = CI.cit_id and CI.ser_id = SER.ser_id and CI.sed_id = SED.sed_id and CI.emp_id = EMP.emp_id group by NombreEmpleado, NombreSede, NombreServicio order by CantidadAtencion desc limit 1;", nativeQuery = true)
     public TercerCuartoReporteDto reporteEmpleadoClientesMasAtendidos();
 
+    @Query(value = "select EMP.emp_nombre as NombreEmpleado, SED.sed_nombre as NombreSede, SER.ser_nombre as NombreServicio, count(*) as CantidadAtencion from historialCliente as HC, cita as CI, servicio as SER, sede as SED, empleado as EMP where HC.cit_id = CI.cit_id and CI.ser_id = SER.ser_id and CI.sed_id = SED.sed_id and CI.emp_id = EMP.emp_id group by NombreEmpleado, NombreSede, NombreServicio order by CantidadAtencion asc limit 1;", nativeQuery = true)
+    public TercerCuartoReporteDto reporteEmpleadoClientesMenosAtendidos();
 }

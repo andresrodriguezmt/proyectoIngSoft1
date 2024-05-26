@@ -224,6 +224,50 @@
                 </div>
 
             </div>
+
+            <br> <br>
+            <hr>
+
+            <br> <br>
+
+            <div class="row" style="display: flex; align-items: center;">
+                <!-- División izquierda -->
+                <div class="col-md-3">
+
+                    <h1>Reporte 4</h1>
+
+                </div>
+                <!-- División derecha -->
+                <div class="col-md-8" style="text-align: justify;">
+                    <br>
+                    <h1>Empleado con menos clientes atendidos</h1>
+
+                    <br><br>
+
+                    <table class="table table-striped table-bordered text-center">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Sede</th>
+                            <th>Servicio</th>
+                            <th>Cantidad clientes atendidos</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${empleadoMenosAtencion.empleado}">Empleado</td>
+                            <td th:text="${empleadoMenosAtencion.sede}">Sede</td>
+                            <td th:text="${empleadoMenosAtencion.servicio}">Servicio</td>
+                            <td th:text="${empleadoMenosAtencion.cantidadAtendido}">Cantidad Atendidos</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <br>
+                </div>
+
+            </div>
+
         </div>
     </body>
 </html>

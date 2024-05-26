@@ -18,4 +18,7 @@ public interface OperacionesHistorialCliente {
     public ReporteTiempoPromedioAtencionDto reporteTiempoPromedioAtencion(int numeroCitas, int idSede, int idServicio);
 
     public ReporteEmpleadoCantidadAtendidoDto reporteEmpleadoMasClienteAtendido();
+
+
+    public ReporteEmpleadoCantidadAtendidoDto reporteEmpleadoMenosClienteAtendido();
 }
