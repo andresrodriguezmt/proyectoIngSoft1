@@ -41,5 +41,10 @@ public class ServicioSede implements OperacionesSede {
     public SedeDto buscarPorNombre(String nombre) {
         return modelMapper.map(repositorioSede.findByNombre(nombre), SedeDto.class);
     }
+
+    @Override
+    public SedeDto buscarPorPk(int pkEntidad) {
+        return modelMapper.map(repositorioSede.findById(pkEntidad).orElse(null), SedeDto.class);
+    }
 }
 

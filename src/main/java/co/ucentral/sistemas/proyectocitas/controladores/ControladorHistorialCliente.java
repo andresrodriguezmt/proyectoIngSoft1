@@ -1,14 +1,8 @@
 package co.ucentral.sistemas.proyectocitas.controladores;
 
 import co.ucentral.sistemas.proyectocitas.entidades.Cita;
-import co.ucentral.sistemas.proyectocitas.entidadesdto.CitaDto;
-import co.ucentral.sistemas.proyectocitas.entidadesdto.ClienteDto;
-import co.ucentral.sistemas.proyectocitas.entidadesdto.EmpleadoDto;
-import co.ucentral.sistemas.proyectocitas.entidadesdto.HistorialClienteDto;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioCita;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioCliente;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioEmpleado;
-import co.ucentral.sistemas.proyectocitas.servicios.ServicioHistorialCliente;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.*;
+import co.ucentral.sistemas.proyectocitas.servicios.*;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -20,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -36,14 +33,18 @@ public class ControladorHistorialCliente {
 
     ServicioCliente servicioCliente;
 
+    ServicioSede servicioSede;
+
     String estadoTerminado = "Terminado";
     String estadoLibre = "Libre";
+    String nombreIdEmpleado = "idEmpleado";
 
-    public ControladorHistorialCliente(ServicioHistorialCliente servicioHistorialCliente, ServicioCita servicioCita, ServicioEmpleado servicioEmpleado, ServicioCliente servicioCliente) {
+    public ControladorHistorialCliente(ServicioHistorialCliente servicioHistorialCliente, ServicioCita servicioCita, ServicioEmpleado servicioEmpleado, ServicioCliente servicioCliente, ServicioSede servicioSede) {
         this.servicioHistorialCliente = servicioHistorialCliente;
         this.servicioCita = servicioCita;
         this.servicioEmpleado = servicioEmpleado;
         this.servicioCliente = servicioCliente;
+        this.servicioSede = servicioSede;
     }
 
     @GetMapping({"/cerrar/cita/{idCita}"})
@@ -69,10 +70,17 @@ public class ControladorHistorialCliente {
     public String terminarCita(@PathVariable int idCita, @ModelAttribute("historialCliente") HistorialClienteDto historialClienteDto, RedirectAttributes redirectAttributes){
 
         LocalTime horaFin = LocalTime.now();
-
         CitaDto citaDto = servicioCita.buscarPorPk(idCita);
+
+        long segundosDiferencia = ChronoUnit.SECONDS.between(citaDto.getHoraInicio(),horaFin);
+
+        // Si la hora de llegada es menor que la hora de salida, ajusta la diferencia
+        if (horaFin.isBefore(citaDto.getHoraInicio())) {
+            segundosDiferencia += 24 * 60 * 60; // Suma 24 horas en segundos
+        }
+
         citaDto.setEstado(estadoTerminado);
-        citaDto.setDuracion(LocalTime.of((horaFin.getHour() - citaDto.getHoraInicio().getHour()),(horaFin.getMinute() - citaDto.getHoraInicio().getMinute()),(horaFin.getSecond()) - citaDto.getHoraInicio().getSecond()));
+        citaDto.setDuracion(LocalTime.ofSecondOfDay(segundosDiferencia));
 
         servicioCita.modificar(citaDto);
 
@@ -85,7 +93,7 @@ public class ControladorHistorialCliente {
         citaDto.getCliente().setEstado(estadoLibre);
         servicioCliente.modificar(modelMapper.map(citaDto.getCliente(), ClienteDto.class));
 
-        redirectAttributes.addAttribute("idEmpleado", citaDto.getEmpleado().getIdEmpleado());
+        redirectAttributes.addAttribute(nombreIdEmpleado, citaDto.getEmpleado().getIdEmpleado());
         return "redirect:/principal/empleado/{idEmpleado}";
     }
 
@@ -110,7 +118,44 @@ public class ControladorHistorialCliente {
         servicioCliente.modificar(modelMapper.map(citaDto.getCliente(), ClienteDto.class));
         servicioEmpleado.modificar(modelMapper.map(citaDto.getEmpleado(), EmpleadoDto.class));
 
-        redirectAttributes.addAttribute("idEmpleado", citaDto.getEmpleado().getIdEmpleado());
+        redirectAttributes.addAttribute(nombreIdEmpleado, citaDto.getEmpleado().getIdEmpleado());
         return "redirect:/principal/empleado/{idEmpleado}";
+    }
+
+    @GetMapping({"/reportes/{idEmpleado}"})
+    public String visualizarPaginaReportes(@PathVariable int idEmpleado, Model model){
+
+        List<ReporteServicioMasUsadoDto> listaReporteServicioMasUsado = reporteServicioMasUsado();
+
+        model.addAttribute(nombreIdEmpleado, idEmpleado);
+        model.addAttribute("listaReporteServicioMasUsado", listaReporteServicioMasUsado);
+        return "reportes";
+    }
+
+    public List<ReporteServicioMasUsadoDto> reporteServicioMasUsado(){
+
+        ReporteServicioMasUsadoDto reporteServicio;
+
+        List<ReporteServicioMasUsadoDto> listaReportes = new ArrayList<>();
+
+        for(int i = 1; i < 5; i++){
+
+            reporteServicio = servicioHistorialCliente.reporteServicioMasUsado(i);
+
+            if(reporteServicio == null){
+                SedeDto sedeDto = servicioSede.buscarPorPk(i);
+
+                reporteServicio = ReporteServicioMasUsadoDto
+                        .builder()
+                        .nombreSede(sedeDto.getNombre())
+                        .nombreServicio("La sede no tiene un historial de citas")
+                        .cantidadAtendidos(0L)
+                        .build();
+            }
+
+            listaReportes.add(reporteServicio);
+        }
+
+        return listaReportes;
     }
 }

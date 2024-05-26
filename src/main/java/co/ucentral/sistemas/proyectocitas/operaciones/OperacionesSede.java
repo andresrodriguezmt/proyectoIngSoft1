@@ -10,6 +10,8 @@ public interface OperacionesSede {
     public List<SedeDto> buscarTodos();
 
     public SedeDto buscarPorNombre(String nombre);
+
+    public SedeDto buscarPorPk(int pkEntidad);
 }
 
 

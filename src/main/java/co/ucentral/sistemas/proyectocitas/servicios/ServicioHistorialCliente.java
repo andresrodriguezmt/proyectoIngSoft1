@@ -2,6 +2,8 @@ package co.ucentral.sistemas.proyectocitas.servicios;
 
 import co.ucentral.sistemas.proyectocitas.entidades.HistorialCliente;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.HistorialClienteDto;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.PrimerReporteDto;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.ReporteServicioMasUsadoDto;
 import co.ucentral.sistemas.proyectocitas.operaciones.OperacionesHistorialCliente;
 import co.ucentral.sistemas.proyectocitas.repositorios.RepositorioHistorialCliente;
 import org.modelmapper.ModelMapper;
@@ -38,5 +40,23 @@ public class ServicioHistorialCliente implements OperacionesHistorialCliente {
         TypeToken<List<HistorialClienteDto>> typeToken = new TypeToken<>(){};
 
         return modelMapper.map(repositorioHistorialCliente.findAll(), typeToken.getType());
+    }
+
+    @Override
+    public ReporteServicioMasUsadoDto reporteServicioMasUsado(long idSede) {
+
+        PrimerReporteDto primerReporteDto = repositorioHistorialCliente.reporteServicioMasUsado(idSede);
+
+        if(primerReporteDto != null){
+
+            return  ReporteServicioMasUsadoDto
+                    .builder()
+                    .nombreSede(primerReporteDto.getSedeNombre())
+                    .nombreServicio(primerReporteDto.getServicioNombre())
+                    .cantidadAtendidos(primerReporteDto.getNumeroClientesAtendidos())
+                    .build();
+        }else {
+            return  null;
+        }
     }
 }

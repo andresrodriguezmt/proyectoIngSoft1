@@ -13,6 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+
 @SpringBootApplication
 @Log4j2
 public class ProyectoCitasG15Application implements CommandLineRunner {
@@ -45,16 +47,22 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 
 		String estado = "Nuevo";
 
-		repositorioCliente.save(new Cliente(0, "Santiago Gonzales Garcia ",30 ,"1225489671" ,estado ,"agonzalesg@gmail.com" ,"gonzales12345"));
-		repositorioCliente.save(new Cliente(0, "Felipe Quintero Pinzon",23 ,"1005688745" ,estado ,"fquinterop@gmail.com" ,"quintero456"));
-		repositorioCliente.save(new Cliente(0, "Santiago Cruz",40 ,"1000475578" ,estado ,"scruz@gmail.com" ,"cruz123"));
-		repositorioCliente.save(new Cliente(0, "Felipe Rodriguez Ramirez",35 ,"1003655784" ,estado ,"frodriguezr@gmail.com" ,"rodriguez987"));
-		repositorioCliente.save(new Cliente(0, "Maria Alfonso Perez",25 ,"1023644789" ,estado ,"malfonsop@gmail.com" ,"alfonso675"));
-		repositorioCliente.save(new Cliente(0, "Melissa Martinez Gomez",31 ,"1007855134" ,estado ,"mmartinezg@gmail.com" ,"martinez345"));
-		repositorioCliente.save(new Cliente(0, "Elizabeth Torres Rodriguez",47 ,"1000533467" ,estado ,"etorresr@gmail.com" ,"torres098"));
-		repositorioCliente.save(new Cliente(0, "Gonzalo Sanchez Diaz",50 ,"1000123314" ,estado ,"gsanchezd@gmail.com" ,"sanchez654"));
-		repositorioCliente.save(new Cliente(0, "Nicolas Jimenez Herrera",52 ,"1000111478" ,estado ,"njimenezh@gmail.com" ,"jimenez718"));
-		repositorioCliente.save(new Cliente(0, "Valentina Castro Suarez",21 ,"1009877954" ,estado ,"vcastros@gmail.com" ,"castro619"));
+		List<Cliente> listaVerificarClientes = repositorioCliente.findAll();
+
+		if(listaVerificarClientes.isEmpty()){
+			repositorioCliente.save(new Cliente(0, "Santiago Gonzales Garcia ",30 ,"1225489671" ,estado ,"agonzalesg@gmail.com" ,"gonzales12345"));
+			repositorioCliente.save(new Cliente(0, "Felipe Quintero Pinzon",23 ,"1005688745" ,estado ,"fquinterop@gmail.com" ,"quintero456"));
+			repositorioCliente.save(new Cliente(0, "Santiago Cruz",40 ,"1000475578" ,estado ,"scruz@gmail.com" ,"cruz123"));
+			repositorioCliente.save(new Cliente(0, "Felipe Rodriguez Ramirez",35 ,"1003655784" ,estado ,"frodriguezr@gmail.com" ,"rodriguez987"));
+			repositorioCliente.save(new Cliente(0, "Maria Alfonso Perez",25 ,"1023644789" ,estado ,"malfonsop@gmail.com" ,"alfonso675"));
+			repositorioCliente.save(new Cliente(0, "Melissa Martinez Gomez",31 ,"1007855134" ,estado ,"mmartinezg@gmail.com" ,"martinez345"));
+			repositorioCliente.save(new Cliente(0, "Elizabeth Torres Rodriguez",47 ,"1000533467" ,estado ,"etorresr@gmail.com" ,"torres098"));
+			repositorioCliente.save(new Cliente(0, "Gonzalo Sanchez Diaz",50 ,"1000123314" ,estado ,"gsanchezd@gmail.com" ,"sanchez654"));
+			repositorioCliente.save(new Cliente(0, "Nicolas Jimenez Herrera",52 ,"1000111478" ,estado ,"njimenezh@gmail.com" ,"jimenez718"));
+			repositorioCliente.save(new Cliente(0, "Valentina Castro Suarez",21 ,"1009877954" ,estado ,"vcastros@gmail.com" ,"castro619"));
+		}
+
+
 
 		Servicio servicioCaja = new Servicio();
 		servicioCaja.setNombre("Caja");
@@ -65,10 +73,13 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		Servicio servicioObtenerProd = new Servicio();
 		servicioObtenerProd.setNombre("Obtener nuevos productos");
 
-		repositorioServicio.save(servicioCaja);
-		repositorioServicio.save(servicioAsesoria);
-		repositorioServicio.save(servicioObtenerProd);
+		List<Sede> listaVerificarSedes = repositorioSede.findAll();
 
+		if(listaVerificarSedes.isEmpty()){
+			repositorioServicio.save(servicioCaja);
+			repositorioServicio.save(servicioAsesoria);
+			repositorioServicio.save(servicioObtenerProd);
+		}
 
 		Sede sede1 = new Sede();
 		sede1.setNombre("Zona sur");
@@ -98,10 +109,14 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		sede4.setHoraApertura(8,0,0);
 		sede4.setHoraCierre(16,0,0);
 
-		repositorioSede.save(sede1);
-		repositorioSede.save(sede2);
-		repositorioSede.save(sede3);
-		repositorioSede.save(sede4);
+		List<Servicio> listaVerificarServicios = repositorioServicio.findAll();
+
+		if(listaVerificarServicios.isEmpty()) {
+			repositorioSede.save(sede1);
+			repositorioSede.save(sede2);
+			repositorioSede.save(sede3);
+			repositorioSede.save(sede4);
+		}
 
 		String estadoEmpleado = "Libre";
 
@@ -385,34 +400,37 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		empleadoA7.setSede(sede4);
 		empleadoA7.setServicio(servicioObtenerProd);
 
-		repositorioEmpleado.save(empleadoS1);
-		repositorioEmpleado.save(empleadoS2);
-		repositorioEmpleado.save(empleadoS3);
-		repositorioEmpleado.save(empleadoS4);
-		repositorioEmpleado.save(empleadoS5);
-		repositorioEmpleado.save(empleadoS6);
-		repositorioEmpleado.save(empleadoS7);
-		repositorioEmpleado.save(empleadoC1);
-		repositorioEmpleado.save(empleadoC2);
-		repositorioEmpleado.save(empleadoC3);
-		repositorioEmpleado.save(empleadoC4);
-		repositorioEmpleado.save(empleadoC5);
-		repositorioEmpleado.save(empleadoC6);
-		repositorioEmpleado.save(empleadoC7);
-		repositorioEmpleado.save(empleadoN1);
-		repositorioEmpleado.save(empleadoN2);
-		repositorioEmpleado.save(empleadoN3);
-		repositorioEmpleado.save(empleadoN4);
-		repositorioEmpleado.save(empleadoN5);
-		repositorioEmpleado.save(empleadoN6);
-		repositorioEmpleado.save(empleadoN7);
-		repositorioEmpleado.save(empleadoA1);
-		repositorioEmpleado.save(empleadoA2);
-		repositorioEmpleado.save(empleadoA3);
-		repositorioEmpleado.save(empleadoA4);
-		repositorioEmpleado.save(empleadoA5);
-		repositorioEmpleado.save(empleadoA6);
-		repositorioEmpleado.save(empleadoA7);
+		List<Empleado> listaVerificarEmpleados = repositorioEmpleado.findAll();
 
+		if(listaVerificarEmpleados.isEmpty()) {
+			repositorioEmpleado.save(empleadoS1);
+			repositorioEmpleado.save(empleadoS2);
+			repositorioEmpleado.save(empleadoS3);
+			repositorioEmpleado.save(empleadoS4);
+			repositorioEmpleado.save(empleadoS5);
+			repositorioEmpleado.save(empleadoS6);
+			repositorioEmpleado.save(empleadoS7);
+			repositorioEmpleado.save(empleadoC1);
+			repositorioEmpleado.save(empleadoC2);
+			repositorioEmpleado.save(empleadoC3);
+			repositorioEmpleado.save(empleadoC4);
+			repositorioEmpleado.save(empleadoC5);
+			repositorioEmpleado.save(empleadoC6);
+			repositorioEmpleado.save(empleadoC7);
+			repositorioEmpleado.save(empleadoN1);
+			repositorioEmpleado.save(empleadoN2);
+			repositorioEmpleado.save(empleadoN3);
+			repositorioEmpleado.save(empleadoN4);
+			repositorioEmpleado.save(empleadoN5);
+			repositorioEmpleado.save(empleadoN6);
+			repositorioEmpleado.save(empleadoN7);
+			repositorioEmpleado.save(empleadoA1);
+			repositorioEmpleado.save(empleadoA2);
+			repositorioEmpleado.save(empleadoA3);
+			repositorioEmpleado.save(empleadoA4);
+			repositorioEmpleado.save(empleadoA5);
+			repositorioEmpleado.save(empleadoA6);
+			repositorioEmpleado.save(empleadoA7);
+		}
 	}
 }
