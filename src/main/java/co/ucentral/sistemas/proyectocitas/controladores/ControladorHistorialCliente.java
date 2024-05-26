@@ -35,16 +35,19 @@ public class ControladorHistorialCliente {
 
     ServicioSede servicioSede;
 
+    ServicioServicio servicioServicio;
+
     String estadoTerminado = "Terminado";
     String estadoLibre = "Libre";
     String nombreIdEmpleado = "idEmpleado";
 
-    public ControladorHistorialCliente(ServicioHistorialCliente servicioHistorialCliente, ServicioCita servicioCita, ServicioEmpleado servicioEmpleado, ServicioCliente servicioCliente, ServicioSede servicioSede) {
+    public ControladorHistorialCliente(ServicioHistorialCliente servicioHistorialCliente, ServicioCita servicioCita, ServicioEmpleado servicioEmpleado, ServicioCliente servicioCliente, ServicioSede servicioSede, ServicioServicio servicioServicio) {
         this.servicioHistorialCliente = servicioHistorialCliente;
         this.servicioCita = servicioCita;
         this.servicioEmpleado = servicioEmpleado;
         this.servicioCliente = servicioCliente;
         this.servicioSede = servicioSede;
+        this.servicioServicio = servicioServicio;
     }
 
     @GetMapping({"/cerrar/cita/{idCita}"})
@@ -128,6 +131,10 @@ public class ControladorHistorialCliente {
         List<ReporteServicioMasUsadoDto> listaReporteServicioMasUsado = reporteServicioMasUsado();
 
         model.addAttribute(nombreIdEmpleado, idEmpleado);
+        model.addAttribute("listaReporteTiempoPromedio1", reporteTiempoPromedioAtencion(1));
+        model.addAttribute("listaReporteTiempoPromedio2", reporteTiempoPromedioAtencion(2));
+        model.addAttribute("listaReporteTiempoPromedio3", reporteTiempoPromedioAtencion(3));
+        model.addAttribute("listaReporteTiempoPromedio4", reporteTiempoPromedioAtencion(4));
         model.addAttribute("listaReporteServicioMasUsado", listaReporteServicioMasUsado);
         return "reportes";
     }
@@ -158,4 +165,34 @@ public class ControladorHistorialCliente {
 
         return listaReportes;
     }
+
+    public List<ReporteTiempoPromedioAtencionDto> reporteTiempoPromedioAtencion(int idSede){
+
+        ReporteTiempoPromedioAtencionDto reporteTiempoPromedioAtencionDto;
+        List<ReporteTiempoPromedioAtencionDto> listaTiempoAtencion = new ArrayList<>();
+
+        for(int idServicio = 1; idServicio < 4; idServicio++){
+
+            List<CitaDto> listaCitas = servicioCita.buscarTodosPorServicioPorSedeYEstado(idServicio,idSede, estadoTerminado);
+
+            if(listaCitas.isEmpty()){
+                ServicioDto servicioDto = servicioServicio.buscarPorPk(idServicio);
+
+                reporteTiempoPromedioAtencionDto = ReporteTiempoPromedioAtencionDto
+                        .builder()
+                        .servicio(servicioDto.getNombre())
+                        .tiempoPromedio("0 horas 0 minutos 0 segundos")
+                        .build();
+
+            }else{
+                reporteTiempoPromedioAtencionDto = servicioHistorialCliente.reporteTiempoPromedioAtencion(listaCitas.size(), idSede, idServicio);
+
+            }
+
+            listaTiempoAtencion.add(reporteTiempoPromedioAtencionDto);
+        }
+
+        return listaTiempoAtencion;
+    }
+
 }

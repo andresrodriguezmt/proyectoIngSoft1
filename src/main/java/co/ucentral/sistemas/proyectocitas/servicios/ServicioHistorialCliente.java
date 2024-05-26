@@ -1,15 +1,12 @@
 package co.ucentral.sistemas.proyectocitas.servicios;
 
 import co.ucentral.sistemas.proyectocitas.entidades.HistorialCliente;
-import co.ucentral.sistemas.proyectocitas.entidadesdto.HistorialClienteDto;
-import co.ucentral.sistemas.proyectocitas.entidadesdto.PrimerReporteDto;
-import co.ucentral.sistemas.proyectocitas.entidadesdto.ReporteServicioMasUsadoDto;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.*;
 import co.ucentral.sistemas.proyectocitas.operaciones.OperacionesHistorialCliente;
 import co.ucentral.sistemas.proyectocitas.repositorios.RepositorioHistorialCliente;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -58,5 +55,23 @@ public class ServicioHistorialCliente implements OperacionesHistorialCliente {
         }else {
             return  null;
         }
+    }
+
+    @Override
+    public ReporteTiempoPromedioAtencionDto reporteTiempoPromedioAtencion(int numeroCitas, int idSede, int idServicio) {
+
+        SegundoReporteDto segundoReporteDto = repositorioHistorialCliente.reporteTiempoPromedioAtencion(numeroCitas,idSede, idServicio);
+
+        if(segundoReporteDto != null){
+            return ReporteTiempoPromedioAtencionDto
+                    .builder()
+                    .servicio(segundoReporteDto.getServicioNombre())
+                    .tiempoPromedio(segundoReporteDto.getPromedioAtencion())
+                    .build();
+
+        }else {
+            return null;
+        }
+
     }
 }

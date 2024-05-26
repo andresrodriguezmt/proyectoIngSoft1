@@ -10,6 +10,8 @@ public interface OperacionesServicio {
     public List<ServicioDto> buscarTodos();
 
     public ServicioDto buscarPorNombre(String nombre);
+
+    public ServicioDto buscarPorPk(int pkEntidad);
 }
 
 

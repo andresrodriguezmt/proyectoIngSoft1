@@ -2,6 +2,7 @@ package co.ucentral.sistemas.proyectocitas.operaciones;
 
 import co.ucentral.sistemas.proyectocitas.entidadesdto.HistorialClienteDto;
 import co.ucentral.sistemas.proyectocitas.entidadesdto.ReporteServicioMasUsadoDto;
+import co.ucentral.sistemas.proyectocitas.entidadesdto.ReporteTiempoPromedioAtencionDto;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface OperacionesHistorialCliente {
     public List<HistorialClienteDto> buscarTodos();
 
     public ReporteServicioMasUsadoDto reporteServicioMasUsado(long idSede);
+
+    public ReporteTiempoPromedioAtencionDto reporteTiempoPromedioAtencion(int numeroCitas, int idSede, int idServicio);
 }

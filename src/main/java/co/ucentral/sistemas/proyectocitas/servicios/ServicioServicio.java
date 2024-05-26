@@ -41,4 +41,9 @@ public class ServicioServicio implements OperacionesServicio {
     public ServicioDto buscarPorNombre(String nombre) {
         return modelMapper.map(repositorioServicio.findByNombre(nombre), ServicioDto.class);
     }
+
+    @Override
+    public ServicioDto buscarPorPk(int pkEntidad) {
+        return modelMapper.map(repositorioServicio.findById(pkEntidad).orElse(null), ServicioDto.class);
+    }
 }
