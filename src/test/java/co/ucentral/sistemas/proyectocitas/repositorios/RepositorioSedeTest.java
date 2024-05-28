@@ -87,6 +87,28 @@ class RepositorioSedeTest {
     }
 
     @Test
+    @DisplayName("Prueba para traer una sede por su nombre")
+    void testBuscarSedePorNombre() {
+
+        Sede sede = Sede
+                .builder()
+                .nombre("Zona nororiente")
+                .direccion("Calle 65 #76-68 norte")
+                .numEmpleado(45)
+                .build();
+        sede.setHoraApertura(8,0,0);
+        sede.setHoraCierre(16,0,0);
+
+        repositorioSede.save(sede);
+
+        Sede sede1 = repositorioSede.findByNombre(sede.getNombre());
+
+        assertThat(sede1).isNotNull();
+        assertThat(sede1.getNombre()).isEqualTo(sede.getNombre());
+    }
+
+
+    @Test
     @DisplayName("Test para actualizar una sede")
     void testActualizarSede(){
         Sede sede = repositorioSede.getReferenceById(1);
@@ -146,27 +168,5 @@ class RepositorioSedeTest {
         Sede sede2= repositorioSede.findById(sede1.getIdSede()).orElse(null);
 
         assertThat(sede2).isNull();
-    }
-
-
-    @Test
-    @DisplayName("Prueba para traer una sede por su nombre")
-    void testBuscarSedePorNombre() {
-
-        Sede sede = Sede
-                .builder()
-                .nombre("Zona nororiente")
-                .direccion("Calle 65 #76-68 norte")
-                .numEmpleado(45)
-                .build();
-        sede.setHoraApertura(8,0,0);
-        sede.setHoraCierre(16,0,0);
-
-        repositorioSede.save(sede);
-
-        Sede sede1 = repositorioSede.findByNombre(sede.getNombre());
-
-        assertThat(sede1).isNotNull();
-        assertThat(sede1.getNombre()).isEqualTo(sede.getNombre());
     }
 }

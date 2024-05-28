@@ -184,7 +184,7 @@ public class ControladorCita {
 
             LocalDateTime fechaActual = LocalDateTime.from(temporalAccessor);
 
-            String fechaTabla = agregadoFechas(hora, codigoCliente, servicio, sede, fechaActual, fecha, tiempo);
+            String fechaTabla = agregadoFechas(hora,servicio, sede, fechaActual, fecha, tiempo);
 
             if(fechaTabla != null){
                 listaFechas.add(fechaTabla);
@@ -200,12 +200,12 @@ public class ControladorCita {
 
     }
 
-    public String agregadoFechas(int hora, int codigoCliente, Servicio servicio, Sede sede, LocalDateTime fechaActual, String fecha, String tiempo){
+    public String agregadoFechas(int hora,Servicio servicio, Sede sede, LocalDateTime fechaActual, String fecha, String tiempo){
         String listaFecha = null;
 
-        CitaDto citaDto1 = servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoActivo);
-        CitaDto citaDto2 = servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoTerminado);
-        CitaDto citaDto3 = servicioCita.buscarCitaPorFechaPorSedePorClienteYEstado(fechaActual, sede.getIdSede(), codigoCliente, estadoEspera);
+        CitaDto citaDto1 = servicioCita.buscarTodoPorServicioPorSedePorEstadoyFecha(sede.getIdSede(), servicio.getIdServicio(), estadoActivo, fechaActual);
+        CitaDto citaDto2 = servicioCita.buscarTodoPorServicioPorSedePorEstadoyFecha(sede.getIdSede(), servicio.getIdServicio(), estadoEspera, fechaActual);
+        CitaDto citaDto3 = servicioCita.buscarTodoPorServicioPorSedePorEstadoyFecha(sede.getIdSede(), servicio.getIdServicio(), estadoTerminado, fechaActual);
 
 
         if(hora != 16 && citaDto1 == null && citaDto2 == null && citaDto3 == null){

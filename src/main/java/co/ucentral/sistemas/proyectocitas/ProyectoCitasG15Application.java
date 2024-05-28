@@ -73,9 +73,9 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		Servicio servicioObtenerProd = new Servicio();
 		servicioObtenerProd.setNombre("Obtener nuevos productos");
 
-		List<Sede> listaVerificarSedes = repositorioSede.findAll();
+		List<Servicio> listaVerificarServicios = repositorioServicio.findAll();
 
-		if(listaVerificarSedes.isEmpty()){
+		if(listaVerificarServicios.isEmpty()){
 			repositorioServicio.save(servicioCaja);
 			repositorioServicio.save(servicioAsesoria);
 			repositorioServicio.save(servicioObtenerProd);
@@ -109,9 +109,9 @@ public class ProyectoCitasG15Application implements CommandLineRunner {
 		sede4.setHoraApertura(8,0,0);
 		sede4.setHoraCierre(16,0,0);
 
-		List<Servicio> listaVerificarServicios = repositorioServicio.findAll();
+		List<Sede> listaVerificarSedes = repositorioSede.findAll();
 
-		if(listaVerificarServicios.isEmpty()) {
+		if(listaVerificarSedes.isEmpty()) {
 			repositorioSede.save(sede1);
 			repositorioSede.save(sede2);
 			repositorioSede.save(sede3);

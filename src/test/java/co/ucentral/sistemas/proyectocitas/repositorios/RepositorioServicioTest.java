@@ -76,6 +76,23 @@ class RepositorioServicioTest {
     }
 
     @Test
+    @DisplayName("Prueba para traer un servicio por su nombre")
+    void testBuscarServicioPorNombre() {
+
+        Servicio servicio = Servicio
+                .builder()
+                .nombre("Caja y asesoria")
+                .build();
+
+        repositorioServicio.save(servicio);
+
+        Servicio servicio1= repositorioServicio.findByNombre(servicio.getNombre());
+
+        assertThat(servicio1).isNotNull();
+        assertThat(servicio1.getNombre()).isEqualTo(servicio.getNombre());
+    }
+
+    @Test
     @DisplayName("Test para actualizar un Servicio")
     void testActualizarServicio(){
         Servicio servicio = repositorioServicio.getReferenceById(1);
@@ -123,23 +140,5 @@ class RepositorioServicioTest {
         Servicio servicio2 = repositorioServicio.findById(servicio1.getIdServicio()).orElse(null);
 
         assertThat(servicio2).isNull();
-    }
-
-
-    @Test
-    @DisplayName("Prueba para traer un servicio por su nombre")
-    void testBuscarServicioPorNombre() {
-
-        Servicio servicio = Servicio
-                .builder()
-                .nombre("Caja y asesoria")
-                .build();
-
-        repositorioServicio.save(servicio);
-
-        Servicio servicio1= repositorioServicio.findByNombre(servicio.getNombre());
-
-        assertThat(servicio1).isNotNull();
-        assertThat(servicio1.getNombre()).isEqualTo(servicio.getNombre());
     }
 }

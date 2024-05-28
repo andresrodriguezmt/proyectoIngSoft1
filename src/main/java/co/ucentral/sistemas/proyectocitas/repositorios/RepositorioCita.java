@@ -33,5 +33,8 @@ public interface RepositorioCita extends JpaRepository<Cita, Integer> {
     @Query(value = "SELECT * FROM cita WHERE ser_id = :idServicio AND sed_id = :idSede AND cit_estado = :estado AND emp_id = :empleado", nativeQuery = true)
     public List<Cita> findAllByServicioBySedeByEstadoAndEmpleado(@Param("idServicio") int idServicio, @Param("idSede") int idSede, @Param("estado") String estado, @Param("empleado") int idEmpleado);
 
+    @Query(value = "SELECT * FROM cita WHERE ser_id = :idServicio AND sed_id = :idSede AND cit_estado = :estado and cit_fecha = :fecha", nativeQuery = true)
+    public Cita findAllByServicioBySedeByEstadoAndFecha(@Param("idServicio") int idServicio, @Param("idSede") int idSede, @Param("estado") String estado, @Param("fecha") LocalDateTime fecha);
+
 
 }

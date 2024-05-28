@@ -118,5 +118,16 @@ public class ServicioCita implements OperacionesCita {
         return modelMapper.map(repositorioCita.findAllByServicioBySedeByEstadoAndEmpleado(idServicio,idSede, estado,idEmpleado), typeToken.getType());
     }
 
+    @Override
+    public CitaDto buscarTodoPorServicioPorSedePorEstadoyFecha(int idServicio, int idSede, String estado, LocalDateTime fecha) {
+        Cita cita = repositorioCita.findAllByServicioBySedeByEstadoAndFecha(idServicio,idSede,estado,fecha);
+
+        if(cita != null){
+            return modelMapper.map(cita, CitaDto.class);
+        }else{
+            return null;
+        }
+    }
+
 
 }

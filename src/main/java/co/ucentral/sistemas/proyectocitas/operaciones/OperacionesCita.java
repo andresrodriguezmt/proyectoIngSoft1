@@ -31,4 +31,7 @@ public interface OperacionesCita {
     public List<CitaDto> buscarTodosPorClienteYEstado(int idCliente, String estado);
 
     public List<CitaDto> buscarTodosPorServicioPorSedePorEstadoYEmpleado(int idServicio, int idSede, String estado, int idEmpleado);
+
+    public CitaDto buscarTodoPorServicioPorSedePorEstadoyFecha(int idServicio, int idSede, String estado, LocalDateTime fecha);
+
 }
